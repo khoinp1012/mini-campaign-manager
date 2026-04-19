@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mini Campaign Manager - Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#0b1326",
+                    "secondary-fixed": "#f1daff",
+                    "surface-bright": "#31394d",
+                    "on-background": "#dae2fd",
+                    "tertiary-fixed": "#ffd7f7",
+                    "surface-container-lowest": "#060e20",
+                    "on-tertiary-fixed": "#380039",
+                    "tertiary-container": "#97129a",
+                    "surface-container-highest": "#2d3449",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#dae2fd",
+                    "on-secondary-fixed-variant": "#6b00b0",
+                    "surface": "#0b1326",
+                    "primary": "#bdc2ff",
+                    "on-error-container": "#ffdad6",
+                    "on-surface-variant": "#c6c5d5",
+                    "secondary-fixed-dim": "#dfb7ff",
+                    "secondary-container": "#9d05ff",
+                    "outline-variant": "#454653",
+                    "surface-tint": "#bdc2ff",
+                    "primary-container": "#3e49bb",
+                    "on-primary-fixed": "#000668",
+                    "surface-container-low": "#131b2e",
+                    "inverse-on-surface": "#283044",
+                    "on-error": "#690005",
+                    "primary-fixed": "#e0e0ff",
+                    "primary-fixed-dim": "#bdc2ff",
+                    "on-tertiary-fixed-variant": "#800084",
+                    "on-primary-container": "#c4c8ff",
+                    "inverse-primary": "#4652c3",
+                    "on-primary": "#0e1a95",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed-dim": "#ffaaf7",
+                    "tertiary": "#ffaaf7",
+                    "surface-container-high": "#222a3d",
+                    "on-tertiary-container": "#ffb3f6",
+                    "on-secondary-container": "#f7e6ff",
+                    "on-tertiary": "#5a005d",
+                    "secondary": "#dfb7ff",
+                    "on-primary-fixed-variant": "#2c37ab",
+                    "on-secondary-fixed": "#2d004f",
+                    "background": "#0b1326",
+                    "on-surface": "#dae2fd",
+                    "on-secondary": "#4b007e",
+                    "surface-container": "#171f33",
+                    "surface-variant": "#2d3449",
+                    "outline": "#908f9f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(45, 52, 73, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface-dim text-on-surface selection:bg-primary/30 selection:text-primary">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar - JSON Implementation -->
+<aside class="hidden md:flex flex-col h-screen w-64 border-r border-outline-variant/15 bg-surface-container-low shadow-[0px_24px_48px_rgba(6,14,32,0.4)] p-6 space-y-8 z-50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-primary-container flex items-center justify-center shadow-[0_0_20px_rgba(62,73,187,0.3)]">
+<span class="material-symbols-outlined text-on-primary">monitoring</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-primary tracking-tighter leading-tight">Campaign Manager</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Luminous Depth</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Active Tab: Analytics -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface bg-surface-container-high rounded-md shadow-[0_0_15px_rgba(62,73,187,0.15)] transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+<span class="font-semibold tracking-tight text-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant/70 hover:bg-surface-container-highest hover:text-on-surface transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 duration-200">campaign</span>
+<span class="text-sm tracking-tight">Campaigns</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant/70 hover:bg-surface-container-highest hover:text-on-surface transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 duration-200">groups</span>
+<span class="text-sm tracking-tight">Recipients</span>
+</a>
+</nav>
+<div class="pt-6 border-t border-outline-variant/10 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant/70 hover:bg-surface-container-highest transition-all duration-300" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-sm">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant/70 hover:bg-surface-container-highest transition-all duration-300" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto bg-surface relative">
+<!-- TopNavBar - JSON Implementation -->
+<header class="flex justify-between items-center w-full px-10 py-6 sticky top-0 z-40 bg-surface-dim/60 backdrop-blur-xl">
+<div class="flex items-center gap-8">
+<h2 class="text-xl font-bold bg-gradient-to-r from-primary to-primary-container bg-clip-text text-transparent font-headline tracking-tight">Dashboard</h2>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-lowest border border-outline-variant/10 rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-secondary/50 focus:border-secondary outline-none w-64 transition-all duration-300" placeholder="Search campaigns..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-secondary rounded-full border-2 border-surface"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/20">
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">Alex Rivera</p>
+<p class="text-[10px] text-on-surface-variant">Admin</p>
+</div>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-primary/20" data-alt="professional portrait of a young man with a slight smile in soft studio lighting against a dark neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG6cZxWNwr1nxBpyfPHsm8deCasIpRN6TfIDDaFKdEuSSuoRFEqIDw3qbptnPvtdhtO-Kenc1RSpaf4J3LaH3NKFgudrHq9irG85o9yO03AUWbrb8zOT1nVhEXT9EdQzd8fmnsKVurhqxidSV8-D-hB-WwgEhtnkDouQnrRZmHmTUCwygp1SSVQ0DOx-gy65bmc4H-UdO5FfYBIY-snKBJ_oerFsanukI831M-9CA3EdAetGr3i-dmOdkwcKwB_jjsuU-sJKeIVv0"/>
+</div>
+</div>
+</header>
+<div class="px-10 pb-16 pt-4 max-w-7xl mx-auto space-y-12">
+<!-- Hero Section: Metrics Bento Grid -->
+<section>
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="text-3xl font-black tracking-tighter text-on-surface mb-2">Campaign Performance</h3>
+<p class="text-on-surface-variant text-sm">Live data visualization for all active segments</p>
+</div>
+<button class="group relative px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold rounded-xl shadow-[0_10px_30px_rgba(62,73,187,0.4)] hover:shadow-[0_10px_40px_rgba(62,73,187,0.6)] hover:-translate-y-0.5 transition-all duration-300">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                                Create New Campaign
+                            </span>
+<div class="absolute inset-0 rounded-xl bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="glass-panel p-6 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all duration-500 group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-2 rounded-lg bg-primary-container/20 text-primary">
+<span class="material-symbols-outlined">hub</span>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Audience Reach</span>
+</div>
+<div class="space-y-1">
+<p class="text-4xl font-black text-on-surface tracking-tighter">25,400</p>
+<div class="flex items-center gap-1.5 text-secondary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+12.4%</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel p-6 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all duration-500 group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-2 rounded-lg bg-primary-container/20 text-primary">
+<span class="material-symbols-outlined">send</span>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Emails Dispatched</span>
+</div>
+<div class="space-y-1">
+<p class="text-4xl font-black text-on-surface tracking-tighter">18,200</p>
+<div class="flex items-center gap-1.5 text-secondary text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+5.2%</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel p-6 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all duration-500 group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-2 rounded-lg bg-secondary-container/20 text-secondary">
+<span class="material-symbols-outlined">drafts</span>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Unique Open Rate</span>
+</div>
+<div class="space-y-1">
+<p class="text-4xl font-black text-on-surface tracking-tighter">42.5%</p>
+<div class="flex items-center gap-1.5 text-emerald-400 text-xs font-bold">
+<span class="material-symbols-outlined text-sm">arrow_upward</span>
+<span>Above Average</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="glass-panel p-6 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all duration-500 group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-2 rounded-lg bg-primary-container/20 text-primary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Delivery Success</span>
+</div>
+<div class="space-y-1">
+<p class="text-4xl font-black text-on-surface tracking-tighter">99.8%</p>
+<div class="flex items-center gap-1.5 text-on-surface-variant text-xs font-bold">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span>Optimal Stability</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Middle Content: Charts & Performance -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Delivery Performance Donut Area -->
+<div class="lg:col-span-1 glass-panel p-8 rounded-2xl border border-outline-variant/10 flex flex-col items-center justify-center text-center">
+<h4 class="text-lg font-bold text-on-surface mb-8">Delivery Performance</h4>
+<div class="relative w-48 h-48 mb-8">
+<!-- SVG Donut -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="50" stroke-linecap="round" stroke-width="8"></circle>
+<circle class="text-secondary" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="200" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-black text-on-surface">92%</span>
+<span class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest">Health</span>
+</div>
+</div>
+<div class="w-full space-y-4">
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-on-surface-variant">Delivered</span>
+</div>
+<span class="font-bold">78%</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-on-surface-variant">Opened</span>
+</div>
+<span class="font-bold">14%</span>
+</div>
+</div>
+</div>
+<!-- Trend Graph Placeholder -->
+<div class="lg:col-span-2 glass-panel p-8 rounded-2xl border border-outline-variant/10 relative overflow-hidden group">
+<div class="flex justify-between items-center mb-10">
+<div>
+<h4 class="text-lg font-bold text-on-surface">Growth Projection</h4>
+<p class="text-xs text-on-surface-variant">Audience expansion over last 30 days</p>
+</div>
+<select class="bg-surface-container-low border border-outline-variant/20 rounded-lg text-xs font-bold px-3 py-1.5 focus:ring-1 focus:ring-primary outline-none">
+<option>Last 30 Days</option>
+<option>Last 90 Days</option>
+</select>
+</div>
+<!-- Visual Art for Graph Area -->
+<div class="relative h-64 w-full flex items-end gap-1">
+<div class="w-full h-32 bg-gradient-to-t from-primary/10 to-primary/30 rounded-t-lg group-hover:h-40 transition-all duration-700"></div>
+<div class="w-full h-24 bg-gradient-to-t from-primary/10 to-primary/30 rounded-t-lg group-hover:h-36 transition-all duration-700 delay-75"></div>
+<div class="w-full h-40 bg-gradient-to-t from-primary/10 to-primary/30 rounded-t-lg group-hover:h-48 transition-all duration-700 delay-100"></div>
+<div class="w-full h-36 bg-gradient-to-t from-secondary/10 to-secondary/30 rounded-t-lg group-hover:h-44 transition-all duration-700 delay-150"></div>
+<div class="w-full h-48 bg-gradient-to-t from-secondary/10 to-secondary/40 rounded-t-lg group-hover:h-56 transition-all duration-700 delay-200"></div>
+<div class="w-full h-44 bg-gradient-to-t from-primary/10 to-primary/30 rounded-t-lg group-hover:h-52 transition-all duration-700 delay-300"></div>
+<div class="w-full h-52 bg-gradient-to-t from-primary/10 to-primary/40 rounded-t-lg group-hover:h-60 transition-all duration-700 delay-500"></div>
+</div>
+<div class="absolute top-20 right-8 flex flex-col gap-4">
+<div class="bg-surface-container-highest/80 backdrop-blur p-4 rounded-xl border border-outline-variant/10 shadow-2xl">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mb-1">Peak Audience</p>
+<p class="text-xl font-black text-secondary">+2,481</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Campaigns Table Section -->
+<section class="space-y-6">
+<div class="flex justify-between items-center">
+<h4 class="text-2xl font-black tracking-tight text-on-surface">Recent Campaigns</h4>
+<button class="text-sm font-bold text-primary hover:text-secondary-fixed transition-colors flex items-center gap-1">
+                            View All History
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="glass-panel rounded-2xl border border-outline-variant/10 overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/10">
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Campaign Name</th>
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Status</th>
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Timestamp</th>
+<th class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">rocket_launch</span>
+</div>
+<span class="font-semibold text-on-surface tracking-tight">Q4 Global Product Launch</span>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-secondary-container/20 text-secondary border border-secondary/20">Sent</span>
+</td>
+<td class="px-8 py-6 text-sm text-on-surface-variant">Oct 24, 2023 · 09:12 AM</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">event</span>
+</div>
+<span class="font-semibold text-on-surface tracking-tight">Annual Executive Retreat RSVP</span>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-primary-container/20 text-primary border border-primary/20">Scheduled</span>
+</td>
+<td class="px-8 py-6 text-sm text-on-surface-variant">Nov 01, 2023 · 14:00 PM</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">edit_note</span>
+</div>
+<span class="font-semibold text-on-surface tracking-tight">Weekly Content Digest #42</span>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/30">Draft</span>
+</td>
+<td class="px-8 py-6 text-sm text-on-surface-variant">Last edited 2 hours ago</td>
+<td class="px-8 py-6 text-right">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Bottom spacing for visual weight -->
+<div class="h-10"></div>
+</main>
+</div>
+</body></html>

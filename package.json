@@ -1,0 +1,23 @@
+{
+  "name": "mini-campaign-manager",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "docker compose up -d && npm run dev --workspaces --if-present --parallel",
+    "predev": "([ -f .env ] && [ -d node_modules ]) || ./setup.sh",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "e2e": "cd packages/backend && npm test && cd ../frontend && npm test -- --run && cd ../.. && npx playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "playwright": "^1.59.1"
+  }
+}

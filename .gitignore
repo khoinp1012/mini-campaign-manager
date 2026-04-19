@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+.DS_Store
+*.log
+coverage/
+pgdata/
+test-results/
+.agent/
+.gemini/
+.vscode/
+.sequelizerc
+.agent
