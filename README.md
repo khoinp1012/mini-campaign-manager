@@ -1,20 +1,17 @@
 # Mini Campaign Manager 🚀
 
 A MVP high-performance, full-stack email campaign management platform built for speed, reliability, and premium user experience.
-
+<video src="https://github.com/user-attachments/assets/9e4d804c-ecab-4b57-b59d-e6ba449717b1" controls="controls" style="max-width: 100%; height: auto;"></video>
 ## ✨ Features
 
 - All features in project description implemented with few extras:
 
   1. GUI came from Google Stitch (/gui)
   2. 40+ test coverage, including full Playwright E2E suite
-  3. Full GitHub Actions CI pipeline included (Automated Lint/Build/Test). All test passed in CI.
-
-- What will I do if this project go into production:
-  1. Add missing features, especially notification
-  2. Add OpenClaw integrated so user can build their own features with AI skills.
-  
-
+  3. Full GitHub Actions CI pipeline included (Automated Lint/Build/Test)
+- If this project go production, I will:
+  1. Implement full features
+  2. Integrated with OpenClaw so user can control and query data with natural language via AI skills.
 ## 🛠 Tech Stack
 
 - **Monorepo**: Yarn Workspaces.
@@ -104,3 +101,4 @@ Plugin used: superpower, planning-with-files
 ### 3. What I would NOT let AI Code do (and Why)
 - Generally, it heavily depend on project. If the project need more reliability (production system), it will need more human review / control. But generally, I think AI assistant is unavoidable.
 - In production system, we will need to create AI-assistant branch and mock database to make sure: AI hallucination will not destroy the system. AI will only generate code for AI-assistant branch. Then human will review and merge to main branch.
+- In complex project, I will do plan. AI implement, human direct and control. But for this simple CRUD project, I let AI plan.

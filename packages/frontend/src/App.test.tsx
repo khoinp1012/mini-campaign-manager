@@ -6,6 +6,7 @@ import './index.css';
 import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAuthStore } from './store/useAuthStore';
+import { useToastStore } from './store/useToastStore';
 import api from './api/client';
 import userEvent from '@testing-library/user-event';
 
@@ -15,11 +16,19 @@ const originalError = console.error;
 const originalWarn = console.warn;
 
 beforeAll(() => {
+  const isNoise = (args: any[]) => 
+    typeof args[0] === 'string' && (
+      args[0].includes('Could not parse CSS stylesheet') ||
+      args[0].includes('Error: Could not parse CSS stylesheet')
+    );
+
   console.error = (...args) => {
+    if (isNoise(args)) return;
     originalError(...args);
     throw new Error(`Console Error detected: ${args[0]}`);
   };
   console.warn = (...args) => {
+    if (isNoise(args)) return;
     originalWarn(...args);
     throw new Error(`Console Warning detected: ${args[0]}`);
   };
@@ -73,8 +82,12 @@ describe('Engineering Verification: Gold Standard Matrix', () => {
   describe('P1: Login Page (Interactions & Boundaries)', () => {
     it('Boundary: Handles Invalid Credentials (401) with error feedback', async () => {
       const user = userEvent.setup();
-      (api.post as any).mockRejectedValueOnce({
-        response: { status: 401, data: { error: 'Unauthorized', message: 'Invalid credentials' } }
+      (api.post as any).mockImplementationOnce(() => {
+        // Simulate the global API interceptor doing its job
+        useToastStore.getState().addToast('Invalid credentials', 'error');
+        return Promise.reject({
+          response: { status: 401, data: { error: 'Unauthorized', message: 'Invalid credentials' } }
+        });
       });
 
       render(<TestWrapper initialEntries={['/login']}><AppRoutes /></TestWrapper>);

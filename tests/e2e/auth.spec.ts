@@ -55,7 +55,7 @@ test.describe('Auth E2E', () => {
 
     await page.click('button:has-text("Sign In")');
 
-    await expect(page.getByTestId('auth-error')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('text=Invalid credentials')).toBeVisible({ timeout: 10000 });
   });
 
   test('E2E-Auth-04: Logout → clear session, redirect to login', async ({ page }) => {

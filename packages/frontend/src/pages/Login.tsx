@@ -149,7 +149,7 @@ export default function Login() {
             {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="text-primary font-bold hover:underline"
+              className="text-primary hover:text-primary-container font-bold transition-colors"
             >
               {isLogin ? 'Sign up' : 'Log in'}
             </button>

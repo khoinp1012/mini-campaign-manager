@@ -34,7 +34,7 @@ export default function CampaignDetail() {
     },
     // Poll if sending to see progress
     refetchInterval: (query) => {
-      return query.state.data?.status === 'sending' ? 3000 : false;
+      return query.state.data?.status === 'sending' ? 1000 : false;
     }
   });
 
@@ -213,29 +213,64 @@ export default function CampaignDetail() {
                     <button
                       key={d.label}
                       onClick={() => setScheduleDate(getDayDate(d.day, 0))}
-                      className="px-2 py-0.5 rounded border border-outline-variant/20 bg-surface-container-low hover:bg-primary/10 hover:border-primary/30 transition-all text-[9px] font-black uppercase tracking-widest text-on-surface-variant/60 hover:text-primary"
+                      className="px-2.5 py-1 rounded-md border border-primary/10 bg-surface hover:bg-primary/10 hover:border-primary/40 hover:text-primary transition-all text-[11px] font-black uppercase tracking-tight"
                     >
                       {d.label}
                     </button>
                   ))}
-                  {new Date().getDay() === 0 && <span className="text-[8px] text-on-surface-variant/40 italic">New week starts tomorrow</span>}
+                  {new Date().getDay() === 0 && <span className="text-[9px] text-primary/40 font-bold uppercase italic">Next week starts Mon</span>}
                 </div>
-                <div className="flex flex-wrap gap-1.5 opacity-80">
-                   <div className="w-full text-[9px] font-black text-on-surface-variant/40 uppercase tracking-tighter mb-1">Next Week</div>
-                  {[
-                    { label: 'mon', day: 1 }, { label: 'tue', day: 2 }, { label: 'wed', day: 3 },
-                    { label: 'thu', day: 4 }, { label: 'fri', day: 5 }, { label: 'sat', day: 6 }, { label: 'sun', day: 0 }
-                  ].map(d => (
-                    <button
-                      key={d.label}
-                      onClick={() => setScheduleDate(getDayDate(d.day, 1))}
-                      className="px-2 py-0.5 rounded border border-outline-variant/20 bg-surface-container-low hover:bg-secondary/10 hover:border-secondary/30 transition-all text-[9px] font-black uppercase tracking-widest text-on-surface-variant/60 hover:text-secondary"
-                    >
-                      {d.label}
-                    </button>
-                  ))}
+                
+                <div className="space-y-4 pt-2">
+                  <div className="p-3.5 rounded-xl bg-primary/5 border border-primary/10 space-y-3 shadow-sm">
+                    <div className="text-[10px] font-black text-primary uppercase tracking-widest flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[14px]">calendar_today</span>
+                      This Week
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        { label: 'mon', day: 1 }, { label: 'tue', day: 2 }, { label: 'wed', day: 3 },
+                        { label: 'thu', day: 4 }, { label: 'fri', day: 5 }, { label: 'sat', day: 6 }, { label: 'sun', day: 0 }
+                      ].filter(d => {
+                        const today = new Date().getDay() === 0 ? 7 : new Date().getDay();
+                        const target = d.day === 0 ? 7 : d.day;
+                        return target > today;
+                      }).map(d => (
+                        <button
+                          key={d.label}
+                          onClick={() => setScheduleDate(getDayDate(d.day, 0))}
+                          className="px-2.5 py-1 rounded-md border border-primary/10 bg-surface hover:bg-primary/10 hover:border-primary/40 hover:text-primary transition-all text-[11px] font-black uppercase tracking-tight"
+                        >
+                          {d.label}
+                        </button>
+                      ))}
+                      {new Date().getDay() === 0 && <span className="text-[9px] text-primary/40 font-bold uppercase italic">Next week starts Mon</span>}
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-secondary/5 border border-secondary/10 space-y-3 shadow-sm">
+                    <div className="text-[10px] font-black text-secondary uppercase tracking-widest flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[14px]">calendar_view_week</span>
+                      Next Week
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {[
+                        { label: 'mon', day: 1 }, { label: 'tue', day: 2 }, { label: 'wed', day: 3 },
+                        { label: 'thu', day: 4 }, { label: 'fri', day: 5 }, { label: 'sat', day: 6 }, { label: 'sun', day: 0 }
+                      ].map(d => (
+                        <button
+                          key={d.label}
+                          onClick={() => setScheduleDate(getDayDate(d.day, 1))}
+                          className="px-2 py-0.5 rounded border border-secondary/10 bg-surface hover:bg-secondary/10 hover:border-secondary/40 hover:text-secondary transition-all text-[9px] font-black uppercase tracking-widest"
+                        >
+                          {d.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
+
+                <div className="flex items-center gap-3 pt-2">
                   <input 
                     type="datetime-local" 
                     value={scheduleDate}

@@ -17,7 +17,7 @@ export default function CampaignList() {
     },
     refetchInterval: (query) => {
       const hasSending = query.state.data?.campaigns?.some((c: any) => c.status === 'sending');
-      return hasSending ? 3000 : false;
+      return hasSending ? 1000 : false;
     }
   });
 

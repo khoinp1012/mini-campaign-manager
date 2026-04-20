@@ -342,17 +342,20 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
       {/* Schedule Modal */}
       {schedulingId !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="glass-panel p-8 rounded-2xl border border-outline-variant/10 shadow-2xl w-full max-w-md space-y-6">
-            <h3 className="text-xl font-black text-on-surface tracking-tight">Schedule Campaign</h3>
-            <div className="space-y-4">
+          <div className="bg-surface p-8 rounded-3xl border border-outline-variant shadow-2xl w-full max-w-md space-y-7 ring-1 ring-white/5">
+            <div className="flex items-center justify-between">
+              <h3 className="text-2xl font-black text-on-surface tracking-tight">Schedule Campaign</h3>
+              <span className="material-symbols-outlined text-primary/50 text-[24px]">event_repeat</span>
+            </div>
+            <div className="space-y-6">
 
 
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-on-surface-variant/80 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[16px]">calendar_today</span>
+              <div className="space-y-3 p-4 rounded-2xl bg-primary/5 border border-primary/10">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[14px]">calendar_today</span>
                   This Week
                 </label>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {[
                     { label: 'Mon', day: 1 }, { label: 'Tue', day: 2 }, { label: 'Wed', day: 3 },
                     { label: 'Thu', day: 4 }, { label: 'Fri', day: 5 }, { label: 'Sat', day: 6 }, { label: 'Sun', day: 0 }
@@ -364,21 +367,21 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
                     <button
                       key={d.label}
                       onClick={() => setScheduleDate(getDayDate(d.day, 0))}
-                      className="px-2.5 py-1.5 rounded-lg border border-outline-variant/10 bg-surface-container-low hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all text-[11px] font-black uppercase tracking-tighter"
+                      className="px-3 py-1.5 rounded-lg border border-primary/10 bg-surface hover:bg-primary/10 hover:border-primary/40 hover:text-primary transition-all text-[11px] font-black uppercase tracking-tight shadow-sm"
                     >
                       {d.label}
                     </button>
                   ))}
-                  {new Date().getDay() === 0 && <span className="text-[10px] text-on-surface-variant italic px-2 py-1">New week starts tomorrow</span>}
+                  {new Date().getDay() === 0 && <span className="text-[10px] text-primary/40 font-bold uppercase tracking-widest px-2 py-1">Next week starts Mon</span>}
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-on-surface-variant/80 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[16px]">calendar_view_week</span>
+              <div className="space-y-3 p-4 rounded-2xl bg-secondary/5 border border-secondary/10">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[14px]">calendar_view_week</span>
                   Next Week
                 </label>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {[
                     { label: 'Mon', day: 1 }, { label: 'Tue', day: 2 }, { label: 'Wed', day: 3 },
                     { label: 'Thu', day: 4 }, { label: 'Fri', day: 5 }, { label: 'Sat', day: 6 }, { label: 'Sun', day: 0 }
@@ -386,7 +389,7 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
                     <button
                       key={d.label}
                       onClick={() => setScheduleDate(getDayDate(d.day, 1))}
-                      className="px-2.5 py-1.5 rounded-lg border border-outline-variant/10 bg-surface-container-low hover:bg-secondary/10 hover:border-secondary/30 hover:text-secondary transition-all text-[10px] font-black uppercase tracking-tighter"
+                      className="px-3 py-1.5 rounded-lg border border-secondary/10 bg-surface hover:bg-secondary/10 hover:border-secondary/40 hover:text-secondary transition-all text-[10px] font-black uppercase tracking-tight shadow-sm"
                     >
                       Next {d.label}
                     </button>
@@ -394,9 +397,9 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-on-surface-variant/80 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[16px]">schedule</span>
+              <div className="space-y-3 p-4 rounded-2xl bg-surface-container-high border border-outline-variant/10">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[14px]">schedule</span>
                   Preferred Time
                 </label>
                 <div className="flex gap-2">
@@ -411,7 +414,7 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
                         const base = scheduleDate.split('T')[0] || new Date().toLocaleString('sv-SE').slice(0, 10);
                         setScheduleDate(`${base}T${t.time}`);
                       }}
-                      className="px-3 py-1.5 rounded-lg border border-outline-variant/10 bg-surface-container-low hover:bg-secondary/10 hover:border-secondary/30 hover:text-secondary transition-all text-[11px] font-bold"
+                      className="px-3 py-1.5 rounded-lg border border-outline-variant/20 bg-surface hover:bg-surface-container-highest transition-all text-[11px] font-bold text-on-surface shadow-sm"
                     >
                       {t.label}
                     </button>
