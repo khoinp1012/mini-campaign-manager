@@ -20,6 +20,16 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
   const [schedulingId, setSchedulingId] = useState<number | null>(null);
   const [scheduleDate, setScheduleDate] = useState('');
 
+  const getDayDate = (targetDay: number, skipWeeks = 0) => {
+    const d = new Date();
+    const todayIndex = d.getDay() === 0 ? 7 : d.getDay();
+    const targetIndex = targetDay === 0 ? 7 : targetDay;
+    const diff = (targetIndex - todayIndex) + (skipWeeks * 7);
+    d.setDate(d.getDate() + diff);
+    d.setHours(9, 0, 0, 0);
+    return d.toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16);
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'draft':
@@ -88,7 +98,7 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
           queryClient.setQueryData(queryKey, data);
         });
       }
-      addToast('Failed to delete campaign.', 'error');
+
     },
   });
 
@@ -136,7 +146,7 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
           queryClient.setQueryData(queryKey, data);
         });
       }
-      addToast('Failed to schedule campaign.', 'error');
+
     },
   });
 
@@ -181,7 +191,7 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
           queryClient.setQueryData(queryKey, data);
         });
       }
-      addToast('Failed to initiate dispatch.', 'error');
+
     },
   });
 
@@ -334,14 +344,95 @@ export default function CampaignTable({ campaigns = [], isLoading, onActionSucce
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
           <div className="glass-panel p-8 rounded-2xl border border-outline-variant/10 shadow-2xl w-full max-w-md space-y-6">
             <h3 className="text-xl font-black text-on-surface tracking-tight">Schedule Campaign</h3>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-on-surface-variant">Send at</label>
-              <input
-                type="datetime-local"
-                value={scheduleDate}
-                onChange={(e) => setScheduleDate(e.target.value)}
-                className="w-full px-4 py-3 bg-surface-container-lowest border border-outline-variant/20 rounded-xl text-on-surface focus:ring-2 focus:ring-primary/50 outline-none"
-              />
+            <div className="space-y-4">
+
+
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-on-surface-variant/80 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[16px]">calendar_today</span>
+                  This Week
+                </label>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    { label: 'Mon', day: 1 }, { label: 'Tue', day: 2 }, { label: 'Wed', day: 3 },
+                    { label: 'Thu', day: 4 }, { label: 'Fri', day: 5 }, { label: 'Sat', day: 6 }, { label: 'Sun', day: 0 }
+                  ].filter(d => {
+                    const today = new Date().getDay() === 0 ? 7 : new Date().getDay();
+                    const target = d.day === 0 ? 7 : d.day;
+                    return target > today;
+                  }).map(d => (
+                    <button
+                      key={d.label}
+                      onClick={() => setScheduleDate(getDayDate(d.day, 0))}
+                      className="px-2.5 py-1.5 rounded-lg border border-outline-variant/10 bg-surface-container-low hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all text-[11px] font-black uppercase tracking-tighter"
+                    >
+                      {d.label}
+                    </button>
+                  ))}
+                  {new Date().getDay() === 0 && <span className="text-[10px] text-on-surface-variant italic px-2 py-1">New week starts tomorrow</span>}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-on-surface-variant/80 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[16px]">calendar_view_week</span>
+                  Next Week
+                </label>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    { label: 'Mon', day: 1 }, { label: 'Tue', day: 2 }, { label: 'Wed', day: 3 },
+                    { label: 'Thu', day: 4 }, { label: 'Fri', day: 5 }, { label: 'Sat', day: 6 }, { label: 'Sun', day: 0 }
+                  ].map(d => (
+                    <button
+                      key={d.label}
+                      onClick={() => setScheduleDate(getDayDate(d.day, 1))}
+                      className="px-2.5 py-1.5 rounded-lg border border-outline-variant/10 bg-surface-container-low hover:bg-secondary/10 hover:border-secondary/30 hover:text-secondary transition-all text-[10px] font-black uppercase tracking-tighter"
+                    >
+                      Next {d.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-on-surface-variant/80 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[16px]">schedule</span>
+                  Preferred Time
+                </label>
+                <div className="flex gap-2">
+                  {[
+                    { label: '09:00 AM', time: '09:00' },
+                    { label: '02:00 PM', time: '14:00' },
+                    { label: '08:00 PM', time: '20:00' }
+                  ].map(t => (
+                    <button
+                      key={t.label}
+                      onClick={() => {
+                        const base = scheduleDate.split('T')[0] || new Date().toLocaleString('sv-SE').slice(0, 10);
+                        setScheduleDate(`${base}T${t.time}`);
+                      }}
+                      className="px-3 py-1.5 rounded-lg border border-outline-variant/10 bg-surface-container-low hover:bg-secondary/10 hover:border-secondary/30 hover:text-secondary transition-all text-[11px] font-bold"
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-on-surface-variant">Manual Adjustment</label>
+                <div className="relative">
+                  <span className="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant/50 text-[20px]">calendar_today</span>
+                  <input
+                    type="datetime-local"
+                    value={scheduleDate}
+                    onChange={(e) => setScheduleDate(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/20 rounded-xl text-on-surface font-bold focus:ring-2 focus:ring-primary/50 outline-none transition-all"
+                    min={new Date().toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16)}
+                    data-testid="schedule-date-input"
+                  />
+                </div>
+              </div>
             </div>
             <div className="flex gap-3">
               <button

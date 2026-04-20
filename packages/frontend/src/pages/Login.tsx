@@ -8,7 +8,6 @@ import heroImage from '../assets/hero.png';
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,7 +22,6 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
 
     try {
       const endpoint = isLogin ? '/auth/login' : '/auth/register';
@@ -33,7 +31,7 @@ export default function Login() {
       setAuth(user);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.message || err.response?.data?.error || 'Authentication failed');
+      setFormData(prev => ({ ...prev, password: '' }));
     } finally {
       setIsLoading(false);
     }
@@ -129,11 +127,7 @@ export default function Login() {
               </div>
             </div>
 
-            {error && (
-              <div data-testid="auth-error" className="p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100 animate-pulse">
-                {error}
-              </div>
-            )}
+
 
             <button
               type="submit"

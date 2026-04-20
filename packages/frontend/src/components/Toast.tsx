@@ -5,17 +5,17 @@ export default function ToastContainer() {
   const { toasts, removeToast } = useToastStore();
 
   return (
-    <div className="fixed top-6 right-6 z-50 flex flex-col gap-3 pointer-events-none">
+    <div className="fixed top-6 right-6 z-[9999] flex flex-col gap-3 pointer-events-none">
       {toasts.map((toast) => (
         <div
           key={toast.id}
           className={`
-            pointer-events-auto flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-md border animate-in slide-in-from-right-10 duration-300
+            pointer-events-auto flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl border-2 backdrop-blur-md animate-in slide-in-from-right-10 duration-300
             ${toast.type === 'error' 
-              ? 'bg-destructive/10 border-destructive/20 text-red-400' 
+              ? 'bg-red-500/30 border-red-500/50 text-white shadow-[0_0_30px_rgba(239,68,68,0.2)]' 
               : toast.type === 'success'
-              ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-              : 'bg-primary/10 border-primary/20 text-primary'
+              ? 'bg-emerald-500/30 border-emerald-500/50 text-white shadow-[0_0_30px_rgba(16,185,129,0.2)]'
+              : 'bg-primary/30 border-primary/50 text-white shadow-[0_0_30px_rgba(62,73,187,0.2)]'
             }
           `}
         >

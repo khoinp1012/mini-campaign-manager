@@ -15,6 +15,10 @@ export default function CampaignList() {
       const res = await api.get(`/campaigns?page=${page}&limit=${limit}`);
       return res.data;
     },
+    refetchInterval: (query) => {
+      const hasSending = query.state.data?.campaigns?.some((c: any) => c.status === 'sending');
+      return hasSending ? 3000 : false;
+    }
   });
 
   const campaigns = data?.campaigns || [];

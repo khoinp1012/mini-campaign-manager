@@ -8,7 +8,12 @@ A MVP high-performance, full-stack email campaign management platform built for 
 
   1. GUI came from Google Stitch (/gui)
   2. 40+ test coverage, including full Playwright E2E suite
-  3. Full GitHub Actions CI pipeline included (Automated Lint/Build/Test)
+  3. Full GitHub Actions CI pipeline included (Automated Lint/Build/Test). All test passed in CI.
+
+- What will I do if this project go into production:
+  1. Add missing features, especially notification
+  2. Add OpenClaw integrated so user can build their own features with AI skills.
+  
 
 ## 🛠 Tech Stack
 

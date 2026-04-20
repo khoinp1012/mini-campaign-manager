@@ -25,6 +25,10 @@ export default function Dashboard() {
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+    refetchInterval: (query) => {
+      const hasSending = query.state.data?.pages?.some((p: any) => p.campaigns?.some((c: any) => c.status === 'sending'));
+      return hasSending ? 3000 : false;
+    }
   });
 
   const allCampaigns = useMemo(() => 
@@ -37,6 +41,7 @@ export default function Dashboard() {
       const res = await api.get('/campaigns/stats');
       return res.data;
     },
+    refetchInterval: 3000, // Poll stats regularly to keep Dashboard metrics fresh
   });
 
   // Mocked growth data based on total audience for "WOW" factor

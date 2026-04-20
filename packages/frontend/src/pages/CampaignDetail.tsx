@@ -14,6 +14,16 @@ export default function CampaignDetail() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showScheduler, setShowScheduler] = useState(false);
   const [scheduleDate, setScheduleDate] = useState('');
+  
+  const getDayDate = (targetDay: number, skipWeeks = 0) => {
+    const d = new Date();
+    const todayIndex = d.getDay() === 0 ? 7 : d.getDay();
+    const targetIndex = targetDay === 0 ? 7 : targetDay;
+    const diff = (targetIndex - todayIndex) + (skipWeeks * 7);
+    d.setDate(d.getDate() + diff);
+    d.setHours(9, 0, 0, 0);
+    return d.toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16);
+  };
 
   // Fetch campaign details
   const { data: campaign, isLoading, isError, refetch } = useQuery<Campaign>({
@@ -188,23 +198,61 @@ export default function CampaignDetail() {
               </div>
             </div>
             
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <input 
-                type="datetime-local" 
-                value={scheduleDate}
-                onChange={(e) => setScheduleDate(e.target.value)}
-                className="flex-1 sm:w-64 bg-surface-container-low border border-outline-variant/20 rounded-xl px-4 py-2.5 text-on-surface font-bold focus:ring-2 focus:ring-primary outline-none transition-all"
-                min={new Date().toISOString().slice(0, 16)}
-              />
-              <button 
-                onClick={() => scheduleMutation.mutate(scheduleDate)}
-                disabled={!scheduleDate || scheduleMutation.isPending}
-                className="px-6 py-2.5 bg-primary text-on-primary font-black rounded-xl hover:shadow-lg hover:shadow-primary/30 disabled:opacity-50 transition-all flex items-center gap-2"
-              >
-                {scheduleMutation.isPending ? <span className="material-symbols-outlined animate-spin">sync</span> : <span className="material-symbols-outlined">event_available</span>}
-                <span>Confirm</span>
-              </button>
-            </div>
+              <div className="flex flex-col gap-4 w-full sm:w-auto">
+
+                <div className="flex flex-wrap gap-1.5 opacity-80">
+                  <div className="w-full text-[9px] font-black text-on-surface-variant/40 uppercase tracking-tighter mb-1">This Week</div>
+                  {[
+                    { label: 'mon', day: 1 }, { label: 'tue', day: 2 }, { label: 'wed', day: 3 },
+                    { label: 'thu', day: 4 }, { label: 'fri', day: 5 }, { label: 'sat', day: 6 }, { label: 'sun', day: 0 }
+                  ].filter(d => {
+                    const today = new Date().getDay() === 0 ? 7 : new Date().getDay();
+                    const target = d.day === 0 ? 7 : d.day;
+                    return target > today;
+                  }).map(d => (
+                    <button
+                      key={d.label}
+                      onClick={() => setScheduleDate(getDayDate(d.day, 0))}
+                      className="px-2 py-0.5 rounded border border-outline-variant/20 bg-surface-container-low hover:bg-primary/10 hover:border-primary/30 transition-all text-[9px] font-black uppercase tracking-widest text-on-surface-variant/60 hover:text-primary"
+                    >
+                      {d.label}
+                    </button>
+                  ))}
+                  {new Date().getDay() === 0 && <span className="text-[8px] text-on-surface-variant/40 italic">New week starts tomorrow</span>}
+                </div>
+                <div className="flex flex-wrap gap-1.5 opacity-80">
+                   <div className="w-full text-[9px] font-black text-on-surface-variant/40 uppercase tracking-tighter mb-1">Next Week</div>
+                  {[
+                    { label: 'mon', day: 1 }, { label: 'tue', day: 2 }, { label: 'wed', day: 3 },
+                    { label: 'thu', day: 4 }, { label: 'fri', day: 5 }, { label: 'sat', day: 6 }, { label: 'sun', day: 0 }
+                  ].map(d => (
+                    <button
+                      key={d.label}
+                      onClick={() => setScheduleDate(getDayDate(d.day, 1))}
+                      className="px-2 py-0.5 rounded border border-outline-variant/20 bg-surface-container-low hover:bg-secondary/10 hover:border-secondary/30 transition-all text-[9px] font-black uppercase tracking-widest text-on-surface-variant/60 hover:text-secondary"
+                    >
+                      {d.label}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-3">
+                  <input 
+                    type="datetime-local" 
+                    value={scheduleDate}
+                    onChange={(e) => setScheduleDate(e.target.value)}
+                    className="flex-1 sm:w-64 bg-surface-container-low border border-outline-variant/20 rounded-xl px-4 py-2.5 text-on-surface font-bold focus:ring-2 focus:ring-primary outline-none transition-all"
+                    min={new Date().toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16)}
+                  />
+                  <button 
+                    onClick={() => scheduleMutation.mutate(scheduleDate)}
+                    disabled={!scheduleDate || scheduleMutation.isPending}
+                    className="px-6 py-2.5 bg-primary text-on-primary font-black rounded-xl hover:shadow-lg hover:shadow-primary/30 disabled:opacity-50 transition-all flex items-center gap-2"
+                  >
+                    {scheduleMutation.isPending ? <span className="material-symbols-outlined animate-spin">sync</span> : <span className="material-symbols-outlined">event_available</span>}
+                    <span>Confirm</span>
+                  </button>
+                </div>
+              </div>
           </div>
         </div>
       )}
