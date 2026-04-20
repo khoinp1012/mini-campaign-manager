@@ -11,9 +11,9 @@ describe('UI Engineering Verification', () => {
   describe('F2.1: Status Badges', () => {
     it('Requirement: Status colors match spec (Draft, Scheduled, Sent)', () => {
       const mockCampaigns: any[] = [
-        { id: 1, name: 'C1', status: 'draft', createdAt: new Date() },
-        { id: 2, name: 'C2', status: 'scheduled', createdAt: new Date() },
-        { id: 3, name: 'C3', status: 'sent', createdAt: new Date() },
+        { id: 1, name: 'C1', status: 'draft', subject: 'S1', body: 'B1', createdBy: 1, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), scheduledAt: null },
+        { id: 2, name: 'C2', status: 'scheduled', subject: 'S2', body: 'B2', createdBy: 1, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), scheduledAt: new Date().toISOString() },
+        { id: 3, name: 'C3', status: 'sent', subject: 'S3', body: 'B3', createdBy: 1, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), scheduledAt: new Date().toISOString() },
       ];
 
       render(
@@ -25,15 +25,15 @@ describe('UI Engineering Verification', () => {
       );
 
       // Verify draft badge
-      const draftBadge = screen.getByText(/Draft/i);
+      const draftBadge = screen.getByText(/^draft$/i);
       expect(draftBadge.className).toContain('bg-surface-container-highest');
 
       // Verify scheduled badge
-      const scheduledBadge = screen.getByText(/Scheduled/i);
+      const scheduledBadge = screen.getByText(/^scheduled$/i);
       expect(scheduledBadge.className).toContain('text-blue-400');
 
       // Verify sent badge
-      const sentBadge = screen.getByText(/Sent/i);
+      const sentBadge = screen.getByText(/^sent$/i);
       expect(sentBadge.className).toContain('text-emerald-400');
     });
   });

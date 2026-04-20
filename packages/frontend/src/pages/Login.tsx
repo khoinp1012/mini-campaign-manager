@@ -15,6 +15,8 @@ export default function Login() {
     name: '',
   });
 
+  const normalizeEmail = (val: string) => val.toLowerCase().trim();
+
   const { setAuth } = useAuthStore();
   const navigate = useNavigate();
 
@@ -25,7 +27,8 @@ export default function Login() {
 
     try {
       const endpoint = isLogin ? '/auth/login' : '/auth/register';
-      const response = await api.post(endpoint, formData);
+      const submitData = { ...formData, email: normalizeEmail(formData.email) };
+      const response = await api.post(endpoint, submitData);
       const { user } = response.data;
       setAuth(user);
       navigate('/');

@@ -18,6 +18,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     }
 
     if (!token) {
+      console.log(`[Auth] Blocked: No token found in request to ${req.originalUrl}`);
       return res.status(401).json({ error: 'No token provided' });
     }
 

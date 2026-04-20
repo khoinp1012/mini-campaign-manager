@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useMemo } from 'react';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import api from '../api/client';
 import type { Campaign, CampaignStats } from '../types';
 import { Link } from 'react-router-dom';
@@ -11,27 +11,25 @@ import {
 } from 'recharts';
 
 export default function Dashboard() {
-  const [page, setPage] = useState(1);
-  const [allCampaigns, setAllCampaigns] = useState<Campaign[]>([]);
-
-  const { isLoading: loadingCampaigns, isFetching: fetchingMore } = useQuery({
-    queryKey: ['campaigns', page],
-    queryFn: async () => {
-      const res = await api.get(`/campaigns?page=${page}&limit=5`);
-      const newData: Campaign[] = res.data?.campaigns || [];
-      setAllCampaigns((prev) => {
-        if (page === 1) {
-          // Full reset: replace list (handles deletes & invalidation)
-          return newData;
-        }
-        // Load-more: append only new IDs
-        const existingIds = new Set((prev || []).map(c => c.id));
-        const filtered = newData.filter((c: Campaign) => !existingIds.has(c.id));
-        return [...(prev || []), ...filtered];
-      });
+  const { 
+    data: campaignPages, 
+    isLoading: loadingCampaigns, 
+    fetchNextPage, 
+    hasNextPage, 
+    isFetchingNextPage 
+  } = useInfiniteQuery({
+    queryKey: ['campaigns'],
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await api.get(`/campaigns?page=${pageParam}&limit=5`);
       return res.data;
     },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
   });
+
+  const allCampaigns = useMemo(() => 
+    campaignPages?.pages.flatMap(p => p.campaigns) || [],
+  [campaignPages]);
 
   const { data: stats, isLoading: loadingStats } = useQuery<CampaignStats>({
     queryKey: ['stats'],
@@ -61,10 +59,8 @@ export default function Dashboard() {
     { name: 'Opened', value: stats?.opened || 0, color: 'var(--color-secondary)' },
   ]), [stats]);
 
-  const serverHasMore = stats ? allCampaigns.length < stats.total : false;
-
   const handleLoadMore = () => {
-    setPage(p => p + 1);
+    fetchNextPage();
   };
 
   if (loadingStats && !stats) {
@@ -237,16 +233,15 @@ export default function Dashboard() {
         <CampaignTable 
           campaigns={allCampaigns} 
           isLoading={loadingCampaigns} 
-          onActionSuccess={() => setPage(1)}
         />
-        {(serverHasMore || fetchingMore) && (
+        {(hasNextPage || isFetchingNextPage) && (
           <div className="flex justify-center mt-8">
             <button 
               onClick={handleLoadMore}
-              disabled={fetchingMore}
+              disabled={isFetchingNextPage}
               className="px-8 py-3 rounded-xl border border-outline-variant/30 text-on-surface font-bold text-sm hover:bg-surface-container-highest transition-all flex items-center gap-2 group disabled:opacity-50"
             >
-                {fetchingMore ? (
+                {isFetchingNextPage ? (
                   <span className="material-symbols-outlined animate-spin text-sm">sync</span>
                 ) : (
                   <span className="material-symbols-outlined text-sm group-hover:translate-y-0.5 transition-transform">expand_more</span>

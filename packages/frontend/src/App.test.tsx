@@ -262,7 +262,7 @@ describe('Engineering Verification: Gold Standard Matrix', () => {
     beforeEach(() => {
       useAuthStore.getState().setAuth({ id: 1, name: 'Admin', email: 'admin@example.com' });
       // Default success mocks to prevent rendering crashes
-      (api.get as any).mockResolvedValue({ data: [] });
+      (api.get as any).mockResolvedValue({ data: { campaigns: [], totalPages: 0, total: 0 } });
     });
 
     const routes = [

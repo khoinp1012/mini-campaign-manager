@@ -12,7 +12,7 @@ interface CampaignTableProps {
   onActionSuccess?: () => void;
 }
 
-export default function CampaignTable({ campaigns, isLoading, onActionSuccess }: CampaignTableProps) {
+export default function CampaignTable({ campaigns = [], isLoading, onActionSuccess }: CampaignTableProps) {
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
 
@@ -48,13 +48,46 @@ export default function CampaignTable({ campaigns, isLoading, onActionSuccess }:
     mutationFn: async (id: number) => {
       await api.delete(`/campaigns/${id}`);
     },
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ['campaigns'] });
+      const previousData = queryClient.getQueriesData({ queryKey: ['campaigns'] });
+
+      queryClient.setQueriesData({ queryKey: ['campaigns'] }, (old: any) => {
+        if (!old) return old;
+        if (old.pages) {
+          return {
+            ...old,
+            pages: old.pages.map((page: any) => ({
+              ...page,
+              campaigns: page.campaigns.filter((c: any) => c.id !== id)
+            }))
+          };
+        }
+        if (old.campaigns) {
+          return {
+            ...old,
+            campaigns: old.campaigns.filter((c: any) => c.id !== id)
+          };
+        }
+        return old;
+      });
+
+      return { previousData };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['campaigns'] });
-      queryClient.invalidateQueries({ queryKey: ['stats'] });
       addToast('Campaign deleted.', 'success');
       onActionSuccess?.();
     },
-    onError: () => {
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['campaigns'] });
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
+    },
+    onError: (err, id, context: any) => {
+      if (context?.previousData) {
+        context.previousData.forEach(([queryKey, data]: any) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
       addToast('Failed to delete campaign.', 'error');
     },
   });
@@ -65,17 +98,45 @@ export default function CampaignTable({ campaigns, isLoading, onActionSuccess }:
       const res = await api.post(`/campaigns/${id}/schedule`, { scheduled_at });
       return res.data;
     },
+    onMutate: async ({ id, scheduled_at }) => {
+      await queryClient.cancelQueries({ queryKey: ['campaigns'] });
+      const previousData = queryClient.getQueriesData({ queryKey: ['campaigns'] });
+
+      const updateFn = (old: any) => {
+        if (!old) return old;
+        const updateCampaign = (c: any) => c.id === id ? { ...c, status: 'scheduled', scheduledAt: scheduled_at } : c;
+        if (old.pages) {
+          return { ...old, pages: old.pages.map((page: any) => ({ ...page, campaigns: page.campaigns.map(updateCampaign) })) };
+        }
+        if (old.campaigns) {
+          return { ...old, campaigns: old.campaigns.map(updateCampaign) };
+        }
+        return old;
+      };
+
+      queryClient.setQueriesData({ queryKey: ['campaigns'] }, updateFn);
+      queryClient.setQueryData(['campaign', String(id)], (old: any) => old ? { ...old, status: 'scheduled', scheduledAt: scheduled_at } : old);
+
+      return { previousData };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['campaigns'] });
-      queryClient.invalidateQueries({ queryKey: ['stats'] });
       addToast('Campaign scheduled.', 'success');
       setSchedulingId(null);
       setScheduleDate('');
       onActionSuccess?.();
     },
-    onError: () => {
+    onSettled: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['campaigns'] });
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
+      if (data?.id) queryClient.invalidateQueries({ queryKey: ['campaign', String(data.id)] });
+    },
+    onError: (err, variables, context: any) => {
+      if (context?.previousData) {
+        context.previousData.forEach(([queryKey, data]: any) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
       addToast('Failed to schedule campaign.', 'error');
-      setSchedulingId(null);
     },
   });
 
@@ -84,13 +145,42 @@ export default function CampaignTable({ campaigns, isLoading, onActionSuccess }:
     mutationFn: async (id: number) => {
       await api.post(`/campaigns/${id}/send`);
     },
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ['campaigns'] });
+      const previousData = queryClient.getQueriesData({ queryKey: ['campaigns'] });
+
+      const updateFn = (old: any) => {
+        if (!old) return old;
+        const updateCampaign = (c: any) => c.id === id ? { ...c, status: 'sending' } : c;
+        if (old.pages) {
+          return { ...old, pages: old.pages.map((page: any) => ({ ...page, campaigns: page.campaigns.map(updateCampaign) })) };
+        }
+        if (old.campaigns) {
+          return { ...old, campaigns: old.campaigns.map(updateCampaign) };
+        }
+        return old;
+      };
+
+      queryClient.setQueriesData({ queryKey: ['campaigns'] }, updateFn);
+      queryClient.setQueryData(['campaign', String(id)], (old: any) => old ? { ...old, status: 'sending' } : old);
+
+      return { previousData };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['campaigns'] });
-      queryClient.invalidateQueries({ queryKey: ['stats'] });
       addToast('Dispatch sequence initiated.', 'success');
       onActionSuccess?.();
     },
-    onError: () => {
+    onSettled: (_, __, id) => {
+      queryClient.invalidateQueries({ queryKey: ['campaigns'] });
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
+      queryClient.invalidateQueries({ queryKey: ['campaign', String(id)] });
+    },
+    onError: (err, id, context: any) => {
+      if (context?.previousData) {
+        context.previousData.forEach(([queryKey, data]: any) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
       addToast('Failed to initiate dispatch.', 'error');
     },
   });
@@ -157,6 +247,7 @@ export default function CampaignTable({ campaigns, isLoading, onActionSuccess }:
                           </button>
                           <button
                             onClick={() => { setSchedulingId(campaign.id); setScheduleDate(''); }}
+                            aria-label="Schedule"
                             className="w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight"
                           >
                             <span className="material-symbols-outlined text-sm">calendar_month</span>
@@ -165,6 +256,7 @@ export default function CampaignTable({ campaigns, isLoading, onActionSuccess }:
                           <button
                             onClick={() => sendMutation.mutate(campaign.id)}
                             disabled={sendMutation.isPending}
+                            aria-label="Send"
                             className="w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"
                           >
                             {sendMutation.isPending && sendMutation.variables === campaign.id ? (
@@ -180,6 +272,7 @@ export default function CampaignTable({ campaigns, isLoading, onActionSuccess }:
                         <>
                           <button
                             onClick={() => { setSchedulingId(campaign.id); setScheduleDate(''); }}
+                            aria-label="Reschedule"
                             className="w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight"
                           >
                             <span className="material-symbols-outlined text-sm">calendar_month</span>
@@ -188,6 +281,7 @@ export default function CampaignTable({ campaigns, isLoading, onActionSuccess }:
                           <button
                             onClick={() => sendMutation.mutate(campaign.id)}
                             disabled={sendMutation.isPending}
+                            aria-label="Send Now"
                             className="w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"
                           >
                             {sendMutation.isPending && sendMutation.variables === campaign.id ? (

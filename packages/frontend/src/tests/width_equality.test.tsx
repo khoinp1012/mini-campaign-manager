@@ -27,10 +27,10 @@ describe('Action Button Width Equality', () => {
       </QueryClientProvider>
     );
 
-    const scheduleBtn = screen.getByText('Schedule').closest('button');
-    const sendBtn = screen.getByText('Send').closest('button');
-    const rescheduleBtn = screen.getByText('Reschedule').closest('button');
-    const sendNowBtn = screen.getByText('Send Now').closest('button');
+    const scheduleBtn = screen.getByRole('button', { name: /^schedule$/i });
+    const sendBtn = screen.getByRole('button', { name: /^send$/i });
+    const rescheduleBtn = screen.getByRole('button', { name: /^reschedule$/i });
+    const sendNowBtn = screen.getByRole('button', { name: /^send now$/i });
 
     // Logic: Both pairs share w-[100px]
     expect(scheduleBtn?.className).toContain('w-[100px]');

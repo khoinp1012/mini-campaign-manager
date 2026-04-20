@@ -20,13 +20,8 @@ if ! command_exists docker; then
     exit 1
 fi
 
-# Detect package manager
-if command_exists yarn; then
-    PKG_MGR="yarn"
-elif command_exists npm; then
-    PKG_MGR="npm"
-else
-    echo "Error: Neither Yarn nor NPM is installed."
+if ! command_exists yarn; then
+    echo "Error: Yarn is not installed. This project requires Yarn workspaces."
     exit 1
 fi
 
@@ -41,7 +36,7 @@ else
 fi
 
 echo "  ✓ Docker found"
-echo "  ✓ $PKG_MGR found"
+echo "  ✓ Yarn found"
 echo "  ✓ $DOCKER_COMPOSE found"
 
 # Start Docker PostgreSQL
@@ -67,8 +62,9 @@ fi
 # Install dependencies and seed
 echo ""
 echo "[4/4] Installing dependencies and seeding..."
-if [ ! -d "node_modules" ]; then
-    $PKG_MGR install
+# Check if concurrently is missing even if node_modules exists
+if [ ! -d "node_modules" ] || [ ! -f "node_modules/.bin/concurrently" ]; then
+    yarn install
     echo "  ✓ Dependencies installed"
 else
     echo "  ✓ Dependencies already present"
@@ -76,11 +72,7 @@ fi
 
 # Seed database
 echo "Seeding database..."
-if [ "$PKG_MGR" = "yarn" ]; then
-    yarn workspace @mini-campaign-manager/backend seed
-else
-    npm run seed --workspace=@mini-campaign-manager/backend
-fi
+yarn workspace @mini-campaign-manager/backend seed
 echo "  ✓ Database seeded"
 
 echo ""
@@ -89,7 +81,11 @@ echo "  Setup Complete! 🚀"
 echo "=============================================="
 echo ""
 echo "To start the development servers, run:"
-echo "  $PKG_MGR run dev"
+echo "  yarn run dev"
+echo ""
+echo "Demo Credentials:"
+echo "  - Email:    demo@example.com"
+echo "  - Password: password123"
 echo ""
 echo "Backend:  http://localhost:3001"
 echo "Frontend: http://localhost:5173"

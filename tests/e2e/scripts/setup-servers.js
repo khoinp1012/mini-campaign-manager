@@ -4,11 +4,13 @@ import { setTimeout } from 'timers/promises';
 const backend = spawn('yarn', ['workspace', '@mini-campaign-manager/backend', 'dev'], {
   stdio: 'pipe',
   shell: true,
+  env: { ...process.env, E2E_SERVER: 'true' },
 });
 
 const frontend = spawn('yarn', ['workspace', '@mini-campaign-manager/frontend', 'dev'], {
   stdio: 'pipe',
   shell: true,
+  env: process.env,
 });
 
 backend.stdout.on('data', (data) => process.stdout.write(`[backend] ${data}`));

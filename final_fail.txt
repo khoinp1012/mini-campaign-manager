@@ -1,0 +1,1474 @@
+Build & Test	Set up job	﻿2026-04-20T00:30:39.3137553Z Current runner version: '2.333.1'
+Build & Test	Set up job	2026-04-20T00:30:39.3160927Z ##[group]Runner Image Provisioner
+Build & Test	Set up job	2026-04-20T00:30:39.3161744Z Hosted Compute Agent
+Build & Test	Set up job	2026-04-20T00:30:39.3162249Z Version: 20260213.493
+Build & Test	Set up job	2026-04-20T00:30:39.3162962Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Build & Test	Set up job	2026-04-20T00:30:39.3163863Z Build Date: 2026-02-13T00:28:41Z
+Build & Test	Set up job	2026-04-20T00:30:39.3164548Z Worker ID: {96d997b3-0745-4d7e-a716-e49899077952}
+Build & Test	Set up job	2026-04-20T00:30:39.3165266Z Azure Region: northcentralus
+Build & Test	Set up job	2026-04-20T00:30:39.3165832Z ##[endgroup]
+Build & Test	Set up job	2026-04-20T00:30:39.3167600Z ##[group]Operating System
+Build & Test	Set up job	2026-04-20T00:30:39.3168163Z Ubuntu
+Build & Test	Set up job	2026-04-20T00:30:39.3168728Z 24.04.4
+Build & Test	Set up job	2026-04-20T00:30:39.3169178Z LTS
+Build & Test	Set up job	2026-04-20T00:30:39.3169613Z ##[endgroup]
+Build & Test	Set up job	2026-04-20T00:30:39.3170128Z ##[group]Runner Image
+Build & Test	Set up job	2026-04-20T00:30:39.3170658Z Image: ubuntu-24.04
+Build & Test	Set up job	2026-04-20T00:30:39.3171141Z Version: 20260413.86.1
+Build & Test	Set up job	2026-04-20T00:30:39.3172159Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Build & Test	Set up job	2026-04-20T00:30:39.3174149Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Build & Test	Set up job	2026-04-20T00:30:39.3175136Z ##[endgroup]
+Build & Test	Set up job	2026-04-20T00:30:39.3176200Z ##[group]GITHUB_TOKEN Permissions
+Build & Test	Set up job	2026-04-20T00:30:39.3178056Z Contents: read
+Build & Test	Set up job	2026-04-20T00:30:39.3178624Z Metadata: read
+Build & Test	Set up job	2026-04-20T00:30:39.3179124Z Packages: read
+Build & Test	Set up job	2026-04-20T00:30:39.3179605Z ##[endgroup]
+Build & Test	Set up job	2026-04-20T00:30:39.3182006Z Secret source: Actions
+Build & Test	Set up job	2026-04-20T00:30:39.3182748Z Prepare workflow directory
+Build & Test	Set up job	2026-04-20T00:30:39.3624310Z Prepare all required actions
+Build & Test	Set up job	2026-04-20T00:30:39.3661122Z Getting action download info
+Build & Test	Set up job	2026-04-20T00:30:39.7439962Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+Build & Test	Set up job	2026-04-20T00:30:39.8839094Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+Build & Test	Set up job	2026-04-20T00:30:39.9684661Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Build & Test	Set up job	2026-04-20T00:30:40.2948046Z Complete job name: Build & Test
+Build & Test	Initialize containers	﻿2026-04-20T00:30:40.3510679Z ##[group]Checking docker version
+Build & Test	Initialize containers	2026-04-20T00:30:40.3524372Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+Build & Test	Initialize containers	2026-04-20T00:30:40.3885740Z '1.48'
+Build & Test	Initialize containers	2026-04-20T00:30:40.3901643Z Docker daemon API version: '1.48'
+Build & Test	Initialize containers	2026-04-20T00:30:40.3903117Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+Build & Test	Initialize containers	2026-04-20T00:30:40.4056023Z '1.48'
+Build & Test	Initialize containers	2026-04-20T00:30:40.4068812Z Docker client API version: '1.48'
+Build & Test	Initialize containers	2026-04-20T00:30:40.4074741Z ##[endgroup]
+Build & Test	Initialize containers	2026-04-20T00:30:40.4078108Z ##[group]Clean up resources from previous jobs
+Build & Test	Initialize containers	2026-04-20T00:30:40.4084372Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=98a30f"
+Build & Test	Initialize containers	2026-04-20T00:30:40.4221375Z ##[command]/usr/bin/docker network prune --force --filter "label=98a30f"
+Build & Test	Initialize containers	2026-04-20T00:30:40.4345762Z ##[endgroup]
+Build & Test	Initialize containers	2026-04-20T00:30:40.4346662Z ##[group]Create local container network
+Build & Test	Initialize containers	2026-04-20T00:30:40.4358130Z ##[command]/usr/bin/docker network create --label 98a30f github_network_9ddb49308e844dfea9d6c8835d4b66e5
+Build & Test	Initialize containers	2026-04-20T00:30:40.4890694Z d1b92bd1144428d341f6f580b4aa0d89b08b14b004078759a8cde085821c8bee
+Build & Test	Initialize containers	2026-04-20T00:30:40.4907366Z ##[endgroup]
+Build & Test	Initialize containers	2026-04-20T00:30:40.4932134Z ##[group]Starting db service container
+Build & Test	Initialize containers	2026-04-20T00:30:40.4954407Z ##[command]/usr/bin/docker pull postgres:15-alpine
+Build & Test	Initialize containers	2026-04-20T00:30:40.8910247Z 15-alpine: Pulling from library/postgres
+Build & Test	Initialize containers	2026-04-20T00:30:40.9984243Z 6a0ac1617861: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9985911Z 42095b535ce1: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9987260Z ab2e486ebe00: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9988686Z 40623156ff32: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9990281Z 6109e62a252c: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9991538Z f73dd4e27afc: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9992769Z 274ff13487ca: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9994208Z ea525b227272: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9995521Z 22162a1f04d2: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9996829Z 4e03c9372db3: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9998582Z c0d4875f1c1b: Pulling fs layer
+Build & Test	Initialize containers	2026-04-20T00:30:40.9999802Z 40623156ff32: Waiting
+Build & Test	Initialize containers	2026-04-20T00:30:41.0000927Z 6109e62a252c: Waiting
+Build & Test	Initialize containers	2026-04-20T00:30:41.0002058Z 22162a1f04d2: Waiting
+Build & Test	Initialize containers	2026-04-20T00:30:41.0003435Z f73dd4e27afc: Waiting
+Build & Test	Initialize containers	2026-04-20T00:30:41.0004572Z 4e03c9372db3: Waiting
+Build & Test	Initialize containers	2026-04-20T00:30:41.0005733Z c0d4875f1c1b: Waiting
+Build & Test	Initialize containers	2026-04-20T00:30:41.0006891Z 274ff13487ca: Waiting
+Build & Test	Initialize containers	2026-04-20T00:30:41.0008053Z ea525b227272: Waiting
+Build & Test	Initialize containers	2026-04-20T00:30:41.1063183Z 42095b535ce1: Verifying Checksum
+Build & Test	Initialize containers	2026-04-20T00:30:41.1065387Z 42095b535ce1: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.1289230Z 6a0ac1617861: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.1368049Z ab2e486ebe00: Verifying Checksum
+Build & Test	Initialize containers	2026-04-20T00:30:41.1370260Z ab2e486ebe00: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.2144532Z 40623156ff32: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.2376542Z 6a0ac1617861: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.2590298Z 6109e62a252c: Verifying Checksum
+Build & Test	Initialize containers	2026-04-20T00:30:41.2592252Z 6109e62a252c: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.3457904Z 274ff13487ca: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.3556088Z ea525b227272: Verifying Checksum
+Build & Test	Initialize containers	2026-04-20T00:30:41.3558048Z ea525b227272: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.4405594Z 22162a1f04d2: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.4563696Z 4e03c9372db3: Verifying Checksum
+Build & Test	Initialize containers	2026-04-20T00:30:41.4565087Z 4e03c9372db3: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.5467966Z c0d4875f1c1b: Verifying Checksum
+Build & Test	Initialize containers	2026-04-20T00:30:41.5469691Z c0d4875f1c1b: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.8539915Z f73dd4e27afc: Verifying Checksum
+Build & Test	Initialize containers	2026-04-20T00:30:41.8540483Z f73dd4e27afc: Download complete
+Build & Test	Initialize containers	2026-04-20T00:30:41.9589755Z 42095b535ce1: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:42.2091100Z ab2e486ebe00: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:42.2227072Z 40623156ff32: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:42.2328951Z 6109e62a252c: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:44.4641084Z f73dd4e27afc: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:44.4799801Z 274ff13487ca: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:44.4896079Z ea525b227272: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:44.4990676Z 22162a1f04d2: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:44.5092790Z 4e03c9372db3: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:44.5211599Z c0d4875f1c1b: Pull complete
+Build & Test	Initialize containers	2026-04-20T00:30:44.5273850Z Digest: sha256:1c52f5ad23db5d7648a63634444af76de48e63b860fccbe3e3a5458b2812eaed
+Build & Test	Initialize containers	2026-04-20T00:30:44.5288265Z Status: Downloaded newer image for postgres:15-alpine
+Build & Test	Initialize containers	2026-04-20T00:30:44.5295586Z docker.io/library/postgres:15-alpine
+Build & Test	Initialize containers	2026-04-20T00:30:44.5352650Z ##[command]/usr/bin/docker create --name 293c8915b677478791661dec9de78ea8_postgres15alpine_f91310 --label 98a30f --network github_network_9ddb49308e844dfea9d6c8835d4b66e5 --network-alias db -p 5432:5432 --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5 -e "POSTGRES_USER=user" -e "POSTGRES_PASSWORD=password" -e "POSTGRES_DB=campaign_manager" -e GITHUB_ACTIONS=true -e CI=true postgres:15-alpine
+Build & Test	Initialize containers	2026-04-20T00:30:44.5583904Z efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Initialize containers	2026-04-20T00:30:44.5601872Z ##[command]/usr/bin/docker start efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Initialize containers	2026-04-20T00:30:44.7139360Z efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Initialize containers	2026-04-20T00:30:44.7159689Z ##[command]/usr/bin/docker ps --all --filter id=efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+Build & Test	Initialize containers	2026-04-20T00:30:44.7284634Z efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b Up Less than a second (health: starting)
+Build & Test	Initialize containers	2026-04-20T00:30:44.7301160Z ##[command]/usr/bin/docker port efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Initialize containers	2026-04-20T00:30:44.7428076Z 5432/tcp -> 0.0.0.0:5432
+Build & Test	Initialize containers	2026-04-20T00:30:44.7428538Z 5432/tcp -> [::]:5432
+Build & Test	Initialize containers	2026-04-20T00:30:44.7484725Z ##[endgroup]
+Build & Test	Initialize containers	2026-04-20T00:30:44.7497330Z ##[group]Waiting for all services to be ready
+Build & Test	Initialize containers	2026-04-20T00:30:44.7511076Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Initialize containers	2026-04-20T00:30:44.7651208Z starting
+Build & Test	Initialize containers	2026-04-20T00:30:44.7675064Z db service is starting, waiting 2 seconds before checking again.
+Build & Test	Initialize containers	2026-04-20T00:30:46.7682291Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Initialize containers	2026-04-20T00:30:46.7796054Z starting
+Build & Test	Initialize containers	2026-04-20T00:30:46.7806451Z db service is starting, waiting 3 seconds before checking again.
+Build & Test	Initialize containers	2026-04-20T00:30:50.4820747Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Initialize containers	2026-04-20T00:30:50.4936656Z starting
+Build & Test	Initialize containers	2026-04-20T00:30:50.4948196Z db service is starting, waiting 8 seconds before checking again.
+Build & Test	Initialize containers	2026-04-20T00:30:59.4872375Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Initialize containers	2026-04-20T00:30:59.4991490Z healthy
+Build & Test	Initialize containers	2026-04-20T00:30:59.5005294Z db service is healthy.
+Build & Test	Initialize containers	2026-04-20T00:30:59.5005711Z ##[endgroup]
+Build & Test	Checkout Repository	﻿2026-04-20T00:30:59.5270111Z ##[group]Run actions/checkout@v4
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5270667Z with:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5270898Z   repository: khoinp1012/mini-campaign-manager
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5271306Z   token: ***
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5271492Z   ssh-strict: true
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5271671Z   ssh-user: git
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5271871Z   persist-credentials: true
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5272079Z   clean: true
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5272263Z   sparse-checkout-cone-mode: true
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5272485Z   fetch-depth: 1
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5272655Z   fetch-tags: false
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5272836Z   show-progress: true
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5273011Z   lfs: false
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5273168Z   submodules: false
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5273657Z   set-safe-directory: true
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5274127Z env:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5274486Z   DATABASE_URL: ***localhost:5432/campaign_manager
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5274767Z   JWT_SECRET: ci-secret
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5274952Z   NODE_ENV: test
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5275108Z   PORT: 3001
+Build & Test	Checkout Repository	2026-04-20T00:30:59.5275268Z ##[endgroup]
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6405937Z Syncing repository: khoinp1012/mini-campaign-manager
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6407929Z ##[group]Getting Git version info
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6408727Z Working directory is '/home/runner/work/mini-campaign-manager/mini-campaign-manager'
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6409818Z [command]/usr/bin/git version
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6410218Z git version 2.53.0
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6417104Z ##[endgroup]
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6431676Z Temporarily overriding HOME='/home/runner/work/_temp/a3592bde-3ee7-4047-b123-33ae396da4dc' before making global git config changes
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6432445Z Adding repository directory to the temporary git global config as a safe directory
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6444710Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mini-campaign-manager/mini-campaign-manager
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6475635Z Deleting the contents of '/home/runner/work/mini-campaign-manager/mini-campaign-manager'
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6478955Z ##[group]Initializing the repository
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6483440Z [command]/usr/bin/git init /home/runner/work/mini-campaign-manager/mini-campaign-manager
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6566328Z hint: Using 'master' as the name for the initial branch. This default branch name
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6567462Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6568255Z hint: to use in all of your new repositories, which will suppress this warning,
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6568852Z hint: call:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6569154Z hint:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6569619Z hint: 	git config --global init.defaultBranch <name>
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6570148Z hint:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6570653Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6571505Z hint: 'development'. The just-created branch can be renamed via this command:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6572402Z hint:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6572755Z hint: 	git branch -m <name>
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6573145Z hint:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6573941Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6575057Z Initialized empty Git repository in /home/runner/work/mini-campaign-manager/mini-campaign-manager/.git/
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6580892Z [command]/usr/bin/git remote add origin https://github.com/khoinp1012/mini-campaign-manager
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6609300Z ##[endgroup]
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6609908Z ##[group]Disabling automatic garbage collection
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6614717Z [command]/usr/bin/git config --local gc.auto 0
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6641867Z ##[endgroup]
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6642459Z ##[group]Setting up auth
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6649442Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6678378Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6958334Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Build & Test	Checkout Repository	2026-04-20T00:30:59.6985355Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Build & Test	Checkout Repository	2026-04-20T00:30:59.7196132Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Build & Test	Checkout Repository	2026-04-20T00:30:59.7225860Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Build & Test	Checkout Repository	2026-04-20T00:30:59.7439205Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Build & Test	Checkout Repository	2026-04-20T00:30:59.7473049Z ##[endgroup]
+Build & Test	Checkout Repository	2026-04-20T00:30:59.7473871Z ##[group]Fetching the repository
+Build & Test	Checkout Repository	2026-04-20T00:30:59.7481351Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6ea316e501e06fbcbeb8fa86487013c63bb7ee53:refs/remotes/origin/main
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2420639Z From https://github.com/khoinp1012/mini-campaign-manager
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2421433Z  * [new ref]         6ea316e501e06fbcbeb8fa86487013c63bb7ee53 -> origin/main
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2447350Z ##[endgroup]
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2447888Z ##[group]Determining the checkout info
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2449894Z ##[endgroup]
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2455093Z [command]/usr/bin/git sparse-checkout disable
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2489930Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2517168Z ##[group]Checking out the ref
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2522530Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2673830Z Switched to a new branch 'main'
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2676559Z branch 'main' set up to track 'origin/main'.
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2684265Z ##[endgroup]
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2717470Z [command]/usr/bin/git log -1 --format=%H
+Build & Test	Checkout Repository	2026-04-20T00:31:00.2738767Z 6ea316e501e06fbcbeb8fa86487013c63bb7ee53
+Build & Test	Setup Node.js 20	﻿2026-04-20T00:31:00.2946970Z ##[group]Run actions/setup-node@v4
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2947241Z with:
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2947407Z   node-version: 20
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2947589Z   cache: yarn
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2947753Z   always-auth: false
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2947941Z   check-latest: false
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2948251Z   token: ***
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2948413Z env:
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2948783Z   DATABASE_URL: ***localhost:5432/campaign_manager
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2949068Z   JWT_SECRET: ci-secret
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2949256Z   NODE_ENV: test
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2949429Z   PORT: 3001
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.2949591Z ##[endgroup]
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.4657881Z Found in cache @ /opt/hostedtoolcache/node/20.20.2/x64
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.4664217Z ##[group]Environment details
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.7718620Z node: v20.20.2
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.7718993Z npm: 10.8.2
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.7719257Z yarn: 1.22.22
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.7720719Z ##[endgroup]
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.7744174Z [command]/usr/local/bin/yarn --version
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.8892208Z 1.22.22
+Build & Test	Setup Node.js 20	2026-04-20T00:31:00.8969240Z [command]/usr/local/bin/yarn cache dir
+Build & Test	Setup Node.js 20	2026-04-20T00:31:01.0372364Z /home/runner/.cache/yarn/v6
+Build & Test	Setup Node.js 20	2026-04-20T00:31:01.0594453Z [command]/usr/local/bin/yarn config get enableGlobalCache
+Build & Test	Setup Node.js 20	2026-04-20T00:31:01.2003224Z undefined
+Build & Test	Setup Node.js 20	2026-04-20T00:31:01.3214363Z yarn cache is not found
+Build & Test	Install Dependencies	﻿2026-04-20T00:31:01.3318323Z ##[group]Run yarn install --frozen-lockfile
+Build & Test	Install Dependencies	2026-04-20T00:31:01.3318705Z [36;1myarn install --frozen-lockfile[0m
+Build & Test	Install Dependencies	2026-04-20T00:31:01.3352431Z shell: /usr/bin/bash -e {0}
+Build & Test	Install Dependencies	2026-04-20T00:31:01.3352669Z env:
+Build & Test	Install Dependencies	2026-04-20T00:31:01.3353150Z   DATABASE_URL: ***localhost:5432/campaign_manager
+Build & Test	Install Dependencies	2026-04-20T00:31:01.3353833Z   JWT_SECRET: ci-secret
+Build & Test	Install Dependencies	2026-04-20T00:31:01.3354035Z   NODE_ENV: test
+Build & Test	Install Dependencies	2026-04-20T00:31:01.3354206Z   PORT: 3001
+Build & Test	Install Dependencies	2026-04-20T00:31:01.3354382Z ##[endgroup]
+Build & Test	Install Dependencies	2026-04-20T00:31:01.4640908Z yarn install v1.22.22
+Build & Test	Install Dependencies	2026-04-20T00:31:01.5359643Z [1/5] Validating package.json...
+Build & Test	Install Dependencies	2026-04-20T00:31:01.5395638Z [2/5] Resolving packages...
+Build & Test	Install Dependencies	2026-04-20T00:31:01.8296261Z [3/5] Fetching packages...
+Build & Test	Install Dependencies	2026-04-20T00:31:20.1050029Z [4/5] Linking dependencies...
+Build & Test	Install Dependencies	2026-04-20T00:31:20.1074810Z warning "workspace-aggregator-550a3f93-d3d7-494f-a364-e7b5c753679a > @mini-campaign-manager/frontend > recharts@3.8.1" has unmet peer dependency "react-is@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0".
+Build & Test	Install Dependencies	2026-04-20T00:31:20.1241505Z warning Workspaces can only be enabled in private projects.
+Build & Test	Install Dependencies	2026-04-20T00:31:20.1268734Z warning Workspaces can only be enabled in private projects.
+Build & Test	Install Dependencies	2026-04-20T00:31:26.1624586Z [5/5] Building fresh packages...
+Build & Test	Install Dependencies	2026-04-20T00:31:26.2611484Z Done in 24.80s.
+Build & Test	Database Preparation	﻿2026-04-20T00:31:26.2974234Z ##[group]Run yarn seed
+Build & Test	Database Preparation	2026-04-20T00:31:26.2974537Z [36;1myarn seed[0m
+Build & Test	Database Preparation	2026-04-20T00:31:26.2995958Z shell: /usr/bin/bash -e {0}
+Build & Test	Database Preparation	2026-04-20T00:31:26.2996187Z env:
+Build & Test	Database Preparation	2026-04-20T00:31:26.2996745Z   DATABASE_URL: ***localhost:5432/campaign_manager
+Build & Test	Database Preparation	2026-04-20T00:31:26.2997044Z   JWT_SECRET: ci-secret
+Build & Test	Database Preparation	2026-04-20T00:31:26.2997248Z   NODE_ENV: test
+Build & Test	Database Preparation	2026-04-20T00:31:26.2997423Z   PORT: 3001
+Build & Test	Database Preparation	2026-04-20T00:31:26.2997585Z ##[endgroup]
+Build & Test	Database Preparation	2026-04-20T00:31:26.4402201Z yarn run v1.22.22
+Build & Test	Database Preparation	2026-04-20T00:31:26.4645811Z $ yarn workspace @mini-campaign-manager/backend seed
+Build & Test	Database Preparation	2026-04-20T00:31:26.8202033Z $ tsx src/seed.ts
+Build & Test	Database Preparation	2026-04-20T00:31:27.3845496Z 🌱 Starting database seeding...
+Build & Test	Database Preparation	2026-04-20T00:31:28.8319941Z ✅ Database synchronized.
+Build & Test	Database Preparation	2026-04-20T00:31:28.9386738Z ✅ User created: demo@example.com
+Build & Test	Database Preparation	2026-04-20T00:31:28.9436989Z ✅ 20 recipients created.
+Build & Test	Database Preparation	2026-04-20T00:31:28.9518039Z ✅ Sent campaign seeded with analytics data.
+Build & Test	Database Preparation	2026-04-20T00:31:28.9837302Z 🚀 Seeding completed successfully!
+Build & Test	Database Preparation	2026-04-20T00:31:29.0115431Z Done in 2.58s.
+Build & Test	Static Analysis (Build)	﻿2026-04-20T00:31:29.0223951Z ##[group]Run yarn build
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.0224243Z [36;1myarn build[0m
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.0245551Z shell: /usr/bin/bash -e {0}
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.0245784Z env:
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.0246193Z   DATABASE_URL: ***localhost:5432/campaign_manager
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.0246496Z   JWT_SECRET: ci-secret
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.0246688Z   NODE_ENV: test
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.0246862Z   PORT: 3001
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.0247025Z ##[endgroup]
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.1497216Z yarn run v1.22.22
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.1722177Z $ yarn workspaces run build
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.3349639Z 
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.3350121Z > @mini-campaign-manager/backend
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:29.5181158Z $ tsc
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:31.7655709Z 
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:31.7656332Z > @mini-campaign-manager/frontend
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:31.9540682Z $ vite build
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:32.3281354Z [36mvite v8.0.8 [32mbuilding client environment for production...[36m[39m
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:32.3422681Z [2K
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:32.6699303Z transforming...✓ 2404 modules transformed.
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:32.7484821Z rendering chunks...
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0095313Z computing gzip size...
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0237140Z dist/index.html                   0.74 kB │ gzip:   0.43 kB
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0238021Z dist/assets/hero-CGobkAl0.png   594.79 kB
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0239397Z dist/assets/index-C0YrDnBg.css   57.71 kB │ gzip:   9.19 kB
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0240465Z dist/assets/index-CsimxilK.js   995.01 kB │ gzip: 289.08 kB
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0240937Z 
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0245286Z [33m[plugin builtin:vite-reporter] 
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0246317Z (!) Some chunks are larger than 500 kB after minification. Consider:
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0247354Z - Using dynamic import() to code-split the application
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0248886Z - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0250473Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0251247Z [32m✓ built in 693ms[39m
+Build & Test	Static Analysis (Build)	2026-04-20T00:31:33.0573154Z Done in 3.91s.
+Build & Test	Run Package Tests	﻿2026-04-20T00:31:33.0682368Z ##[group]Run yarn test
+Build & Test	Run Package Tests	2026-04-20T00:31:33.0682625Z [36;1myarn test[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:33.0704127Z shell: /usr/bin/bash -e {0}
+Build & Test	Run Package Tests	2026-04-20T00:31:33.0704364Z env:
+Build & Test	Run Package Tests	2026-04-20T00:31:33.0704885Z   DATABASE_URL: ***localhost:5432/campaign_manager
+Build & Test	Run Package Tests	2026-04-20T00:31:33.0705190Z   JWT_SECRET: ci-secret
+Build & Test	Run Package Tests	2026-04-20T00:31:33.0705393Z   NODE_ENV: test
+Build & Test	Run Package Tests	2026-04-20T00:31:33.0705562Z   PORT: 3001
+Build & Test	Run Package Tests	2026-04-20T00:31:33.0705730Z ##[endgroup]
+Build & Test	Run Package Tests	2026-04-20T00:31:33.1980836Z yarn run v1.22.22
+Build & Test	Run Package Tests	2026-04-20T00:31:33.2210315Z $ yarn workspaces run test
+Build & Test	Run Package Tests	2026-04-20T00:31:33.3824338Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:33.3825164Z > @mini-campaign-manager/backend
+Build & Test	Run Package Tests	2026-04-20T00:31:33.5677304Z $ vitest run --fileParallelism=false
+Build & Test	Run Package Tests	2026-04-20T00:31:33.8497465Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:33.8503917Z [1m[30m[46m RUN [49m[39m[22m [36mv4.1.4 [39m[90m/home/runner/work/mini-campaign-manager/mini-campaign-manager/packages/backend[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:33.8504834Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:35.0583414Z [90mstdout[2m | src/tests/campaign.test.ts[2m > [22m[2mCampaign Business Logic[2m > [22m[2mAPI-04: GET /campaigns — Boundary: No auth header → 401
+Build & Test	Run Package Tests	2026-04-20T00:31:35.0584432Z [22m[39m[Auth] Blocked: No token found in request to /campaigns
+Build & Test	Run Package Tests	2026-04-20T00:31:35.0584706Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:35.0834139Z  [32m✓[39m src/tests/campaign.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 544[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:35.9189578Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-02: POST /auth/login — Valid credentials → 200 + httpOnly cookie set
+Build & Test	Run Package Tests	2026-04-20T00:31:35.9190873Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:35.9191120Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0040214Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-02: POST /auth/login — Valid credentials → 200 + httpOnly cookie set
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0041782Z [22m[39m[Auth] Success: Logged in auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0042217Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0075048Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-03: POST /auth/login — Boundary: Invalid password → 401
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0076559Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0077016Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0911954Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-03: POST /auth/login — Boundary: Invalid password → 401
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0913911Z [22m[39m[Auth] Failure: Password mismatch for auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.0914419Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.1831797Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-02b: Authenticated request via cookie — Cookie sent, request succeeds
+Build & Test	Run Package Tests	2026-04-20T00:31:36.1833712Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.1834157Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2675691Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-02b: Authenticated request via cookie — Cookie sent, request succeeds
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2677740Z [22m[39m[Auth] Success: Logged in auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2678413Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2854706Z [90mstderr[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-02c: Authenticated request via cookie — Invalid cookie returns 401
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2856104Z [22m[39mAuth Error: JsonWebTokenError: jwt malformed
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2857626Z     at Object.module.exports [as verify] (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mjsonwebtoken[24m/verify.js:70:17)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2859620Z     at authenticate [90m(/home/runner/work/mini-campaign-manager/mini-campaign-manager/packages/backend/[39msrc/middleware/auth.ts:25:25[90m)[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2861654Z     at Layer.handleRequest (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/lib/layer.js:152:17)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2863994Z     at trimPrefix (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:342:13)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2866124Z     at /home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:297:9
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2867916Z     at processParams (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:582:12)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2869672Z     at next (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:291:5)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2871432Z     at Function.handle (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:186:3)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2873184Z     at router (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:60:12)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2875271Z     at Layer.handleRequest (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/lib/layer.js:152:17)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2876197Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2886047Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-04: POST /auth/logout — Clears cookie
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2887524Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.2887931Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.3729905Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mAPI-04: POST /auth/logout — Clears cookie
+Build & Test	Run Package Tests	2026-04-20T00:31:36.3731635Z [22m[39m[Auth] Success: Logged in auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.3732164Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.3806571Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSEC-01: Cookie security — httpOnly prevents JavaScript access
+Build & Test	Run Package Tests	2026-04-20T00:31:36.3807482Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.3807877Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.4689324Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSEC-01: Cookie security — httpOnly prevents JavaScript access
+Build & Test	Run Package Tests	2026-04-20T00:31:36.4690601Z [22m[39m[Auth] Success: Logged in auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.4690938Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.4717622Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSEC-02: Cookie security — SameSite lax for CSRF protection
+Build & Test	Run Package Tests	2026-04-20T00:31:36.4718613Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.4718944Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.5572740Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSEC-02: Cookie security — SameSite lax for CSRF protection
+Build & Test	Run Package Tests	2026-04-20T00:31:36.5574279Z [22m[39m[Auth] Success: Logged in auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.5574582Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.5596928Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSEC-03: Cookie security — Secure flag in production
+Build & Test	Run Package Tests	2026-04-20T00:31:36.5598036Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.5598472Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.6437920Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSEC-03: Cookie security — Secure flag in production
+Build & Test	Run Package Tests	2026-04-20T00:31:36.6439528Z [22m[39m[Auth] Success: Logged in auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.6439846Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.6460953Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSEC-04: Cookie security — HttpOnly means no token in response body
+Build & Test	Run Package Tests	2026-04-20T00:31:36.6462315Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.6462697Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.7300837Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSEC-04: Cookie security — HttpOnly means no token in response body
+Build & Test	Run Package Tests	2026-04-20T00:31:36.7302372Z [22m[39m[Auth] Success: Logged in auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.7302810Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.7334328Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSESSION-01: GET /auth/me — Returns user data when authenticated via cookie
+Build & Test	Run Package Tests	2026-04-20T00:31:36.7335965Z [22m[39m[Auth] Login attempt for: auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.7336226Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8175541Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSESSION-01: GET /auth/me — Returns user data when authenticated via cookie
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8176806Z [22m[39m[Auth] Success: Logged in auth-1776645095632@test.com
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8177128Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8232682Z [90mstdout[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSESSION-02: GET /auth/me — Returns 401 when no cookie provided
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8233828Z [22m[39m[Auth] Blocked: No token found in request to /auth/me
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8234080Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8258349Z [90mstderr[2m | src/tests/auth.test.ts[2m > [22m[2mAuth API Integration[2m > [22m[2mSESSION-03: GET /auth/me — Returns 401 when invalid cookie
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8259480Z [22m[39mAuth Error: JsonWebTokenError: jwt malformed
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8260581Z     at Object.module.exports [as verify] (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mjsonwebtoken[24m/verify.js:70:17)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8262021Z     at authenticate [90m(/home/runner/work/mini-campaign-manager/mini-campaign-manager/packages/backend/[39msrc/middleware/auth.ts:25:25[90m)[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8263604Z     at Layer.handleRequest (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/lib/layer.js:152:17)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8264961Z     at next (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/lib/route.js:157:13)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8266205Z     at Route.dispatch (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/lib/route.js:117:3)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8267414Z     at handle (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:435:11)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8269353Z     at Layer.handleRequest (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/lib/layer.js:152:17)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8270783Z     at /home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:295:15
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8271997Z     at processParams (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:582:12)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8273169Z     at next (/home/runner/work/mini-campaign-manager/mini-campaign-manager/node_modules/[4mrouter[24m/index.js:291:5)
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8273890Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:36.8337417Z  [32m✓[39m src/tests/auth.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1197[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6645822Z [90mstdout[2m | src/tests/recipient.test.ts[2m > [22m[2mRecipient API Hardening[2m > [22m[2mAPI-05: GET /recipients — Boundary: Auth required
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6646787Z [22m[39m[Auth] Blocked: No token found in request to /recipients
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6647292Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6722469Z  [32m✓[39m src/tests/recipient.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 300[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6748869Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6764831Z [2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6765458Z [2m      Tests [22m [1m[32m30 passed[39m[22m[90m (30)[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6765869Z [2m   Start at [22m 00:31:33
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6766521Z [2m   Duration [22m 3.81s[2m (transform 144ms, setup 0ms, import 1.40s, tests 2.04s, environment 0ms)[22m
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6766898Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6974823Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:37.6975143Z > @mini-campaign-manager/frontend
+Build & Test	Run Package Tests	2026-04-20T00:31:37.8866194Z $ vitest
+Build & Test	Run Package Tests	2026-04-20T00:31:38.3446275Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:38.3450582Z [1m[30m[46m RUN [49m[39m[22m [36mv4.1.4 [39m[90m/home/runner/work/mini-campaign-manager/mini-campaign-manager/packages/frontend[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:38.3452131Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:40.2346403Z  [31m❯[39m src/tests/UI.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 117[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:40.2348498Z [31m       [31m×[31m Requirement: Status colors match spec (Draft, Scheduled, Sent)[39m[32m 101[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:40.2350109Z        [32m✓[39m Requirement: Loading feedback is visible during fetch[32m 13[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:40.2626295Z  [32m✓[39m src/tests/useAuthSession.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 194[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:41.5921703Z  [31m❯[39m src/tests/width_equality.test.tsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 74[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:41.5928346Z [31m     [31m×[31m verifies Table buttons share the same width class[39m[32m 71[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:41.5929675Z      [32m✓[39m verifies Detail buttons share the same width class[32m 0[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0056013Z  [32m✓[39m src/App.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[33m 1309[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0057084Z        [33m[2m✓[22m[39m Boundary: Handles Invalid Credentials (401) with error feedback [33m 480[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0057873Z        [33m[2m✓[22m[39m Flow: User can fill out form and receive success feedback [33m 423[2mms[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0086927Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0087555Z [31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0088037Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0093695Z [41m[1m FAIL [22m[49m src/tests/UI.test.tsx[2m > [22mUI Engineering Verification[2m > [22mF2.1: Status Badges[2m > [22mRequirement: Status colors match spec (Draft, Scheduled, Sent)
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0099817Z [31m[1mTestingLibraryElementError[22m[39m: Found multiple elements with the text: /Scheduled/i
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0100488Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0100729Z Here are the matching elements:
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0100997Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0101256Z Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0101733Z [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0102341Z   [33mclass[39m=[32m"text-on-surface-variant/30 italic"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0102889Z [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0103224Z   [0mNot Scheduled[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0103842Z [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0104032Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0104282Z Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0104730Z [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0105863Z   [33mclass[39m=[32m"px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-500/10 text-blue-400 border border-blue-500/20"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0106799Z [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0107222Z   [0mscheduled[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0107456Z [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0107641Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0108355Z (If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0108878Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0109038Z Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0109349Z [36m<body>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0109806Z   [36m<div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0110030Z     [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0110625Z       [33mclass[39m=[32m"glass-panel rounded-2xl border border-outline-variant/10 overflow-hidden shadow-2xl"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0111132Z     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0111347Z       [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0111651Z         [33mclass[39m=[32m"overflow-x-auto"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0111944Z       [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0112171Z         [36m<table[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0112641Z           [33mclass[39m=[32m"w-full text-left border-collapse min-w-[800px]"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0113030Z         [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0113252Z           [36m<thead>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0113785Z             [36m<tr[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0114512Z               [33mclass[39m=[32m"border-b border-outline-variant/10 bg-surface-container-low/50"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0114974Z             [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0115195Z               [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0115785Z                 [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0116309Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0116591Z                 [0mCampaign Name[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0116877Z               [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0117125Z               [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0117712Z                 [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0118212Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0118472Z                 [0mStatus[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0118724Z               [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0118967Z               [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0119535Z                 [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0120034Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0120290Z                 [0mSchedule[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0120546Z               [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0120784Z               [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0121397Z                 [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0121938Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0122194Z                 [0mActions[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0122443Z               [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0122687Z             [36m</tr>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0122927Z           [36m</thead>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0123169Z           [36m<tbody[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0123739Z             [33mclass[39m=[32m"divide-y divide-outline-variant/5"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0124103Z           [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0124338Z             [36m<tr[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0124841Z               [33mclass[39m=[32m"hover:bg-surface-container-highest/30 transition-colors group"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0125407Z               [33mdata-testid[39m=[32m"campaign-row-1"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0125726Z             [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0125970Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0126286Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0126584Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0126830Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0127197Z                   [33mclass[39m=[32m"flex items-center gap-3"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0127528Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0127779Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0128450Z                     [33mclass[39m=[32m"w-8 h-8 flex-shrink-0 rounded-lg bg-surface-container-high flex items-center justify-center"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0129006Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0129275Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0129813Z                       [33mclass[39m=[32m"material-symbols-outlined text-lg text-on-surface-variant"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0130422Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0130701Z                       [0medit_note[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0131008Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0131289Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0131567Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0131926Z                     [33mclass[39m=[32m"flex flex-col min-w-0"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0132245Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0132513Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0133017Z                       [33mclass[39m=[32m"font-semibold text-on-surface tracking-tight truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0133698Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0134146Z                       [0mC1[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0134736Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0135046Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0135506Z                       [33mclass[39m=[32m"text-xs text-on-surface-variant truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0135915Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0136186Z                       [0mS1[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0136466Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0136745Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0137021Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0137269Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0137505Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0137811Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0138101Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0138428Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0139666Z                   [33mclass[39m=[32m"px-3 py-1 rounded-full text-[10px] font-black uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/30"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0140637Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0141050Z                   [0mDraft[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0141348Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0141604Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0141849Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0142280Z                 [33mclass[39m=[32m"px-8 py-6 text-sm text-on-surface-variant"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0142900Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0143492Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0144185Z                   [33mclass[39m=[32m"text-on-surface-variant/30 italic"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0144791Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0145261Z                   [0mNot Scheduled[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0145567Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0145829Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0146077Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0146424Z                 [33mclass[39m=[32m"px-8 py-6 text-right"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0146757Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0147003Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0147418Z                   [33mclass[39m=[32m"flex items-center justify-end gap-2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0147788Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0148049Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0149467Z                     [33mclass[39m=[32m"px-3 py-1.5 bg-surface-container-low border border-outline-variant/10 text-on-surface-variant hover:text-error hover:border-error/30 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0150611Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0150882Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0151311Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0151761Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0152184Z                       [0mdelete[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0152631Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0152932Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0153539Z                       [0mDelete[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0153840Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0154132Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0154414Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0155634Z                     [33mclass[39m=[32m"w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0156776Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0157056Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0157484Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0158044Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0158335Z                       [0mcalendar_month[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0158651Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0159139Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0159461Z                       [0mSchedule[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0159892Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0160314Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0160610Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0162027Z                     [33mclass[39m=[32m"w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0163056Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0163472Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0163904Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0164482Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0164767Z                       [0msend[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0165058Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0165349Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0165632Z                       [0mSend[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0165910Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0166202Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0166485Z                   [36m<a[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0167659Z                     [33mclass[39m=[32m"px-3 py-1.5 hover:bg-surface-container-highest rounded-lg transition-all text-primary flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight border border-primary/10 hover:border-primary/30"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0168708Z                     [33mdata-discover[39m=[32m"true"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0169098Z                     [33mhref[39m=[32m"/campaigns/1"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0169478Z                     [33mtitle[39m=[32m"View Details"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0169779Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0170047Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0170463Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0170852Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0171137Z                       [0mread_more[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0171435Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0171724Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0172005Z                       [0mView[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0172292Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0172588Z                   [36m</a>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0172858Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0173110Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0173511Z             [36m</tr>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0173817Z             [36m<tr[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0174344Z               [33mclass[39m=[32m"hover:bg-surface-container-highest/30 transition-colors group"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0174908Z               [33mdata-testid[39m=[32m"campaign-row-2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0175419Z             [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0175648Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0175952Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0176251Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0176508Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0176856Z                   [33mclass[39m=[32m"flex items-center gap-3"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0177187Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0177435Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0178133Z                     [33mclass[39m=[32m"w-8 h-8 flex-shrink-0 rounded-lg bg-surface-container-high flex items-center justify-center"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0178845Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0179107Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0179727Z                       [33mclass[39m=[32m"material-symbols-outlined text-lg text-primary"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0180184Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0180683Z                       [0mevent[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0181088Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0181383Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0181675Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0182026Z                     [33mclass[39m=[32m"flex flex-col min-w-0"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0182356Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0182623Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0183119Z                       [33mclass[39m=[32m"font-semibold text-on-surface tracking-tight truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0183804Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0184082Z                       [0mC2[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0184368Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0184664Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0185115Z                       [33mclass[39m=[32m"text-xs text-on-surface-variant truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0185526Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0185807Z                       [0mS2[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0186144Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0186691Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0187169Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0187620Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0188063Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0188594Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0189130Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0189620Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0190973Z                   [33mclass[39m=[32m"px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-500/10 text-blue-400 border border-blue-500/20"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0192113Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0192629Z                   [0mscheduled[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0193145Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0193937Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0194402Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0195165Z                 [33mclass[39m=[32m"px-8 py-6 text-sm text-on-surface-variant"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0195670Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0195949Z                 [0mApr 20, 2026[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0196246Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0196570Z                   [33mclass[39m=[32m"mx-1"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0196856Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0197114Z                   [0m·[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0197381Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0197663Z                 [0m12:31 AM[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0197921Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0198162Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0198512Z                 [33mclass[39m=[32m"px-8 py-6 text-right"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0198852Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0199104Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0199509Z                   [33mclass[39m=[32m"flex items-center justify-end gap-2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0200067Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0200330Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0201742Z                     [33mclass[39m=[32m"w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0202733Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0203014Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0203720Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0204139Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0204434Z                       [0mcalendar_month[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0204922Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0205218Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0205521Z                       [0mReschedule[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0205835Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0206121Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0206415Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0207701Z                     [33mclass[39m=[32m"w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0208904Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0209188Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0209745Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0210359Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0210651Z                       [0msend[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0210950Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0211241Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0211543Z                       [0mSend Now[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0211974Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0212355Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0212638Z                   [36m<a[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0214369Z                     [33mclass[39m=[32m"px-3 py-1.5 hover:bg-surface-container-highest rounded-lg transition-all text-primary flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight border border-primary/10 hover:border-primary/30"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0215501Z                     [33mdata-discover[39m=[32m"true"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0215907Z                     [33mhref[39m=[32m"/campaigns/2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0216293Z                     [33mtitle[39m=[32m"View Details"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0216764Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0217182Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0217684Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0218376Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0218677Z                       [0mread_more[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0219146Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0219505Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0219793Z                       [0mView[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0220181Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0220614Z                   [36m</a>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0221094Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0221571Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0221829Z             [36m</tr>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0222066Z             [36m<tr[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0222905Z               [33mclass[39m=[32m"hover:bg-surface-container-highest/30 transition-colors group"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0224031Z               [33mdata-testid[39m=[32m"campaign-row-3"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0224630Z             [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0225255Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0225802Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0226324Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0226795Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0227465Z                   [33mclass[39m=[32m"flex items-center gap-3"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0228061Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0228520Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0229758Z                     [33mclass[39m=[32m"w-8 h-8 flex-shrink-0 rounded-lg bg-surface-container-high flex items-center justify-center"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0230806Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0231288Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0232132Z                       [33mclass[39m=[32m"material-symbols-outlined text-lg text-secondary"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0232817Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0233120Z                       [0mrocket_launch[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0233689Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0233993Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0234280Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0234659Z                     [33mclass[39m=[32m"flex flex-col min-w-0"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0234996Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0235264Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0235777Z                       [33mclass[39m=[32m"font-semibold text-on-surface tracking-tight truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0236247Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0236519Z                       [0mC3[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0236801Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0237087Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0237540Z                       [33mclass[39m=[32m"text-xs text-on-surface-variant truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0237996Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0238256Z                       [0mS3[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0238534Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0238823Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0239099Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0239350Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0239590Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0239901Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0240196Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0240444Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0241227Z                   [33mclass[39m=[32m"px-3 py-1 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0241858Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0242113Z                   [0mSent[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0242390Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0242645Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0242880Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0243492Z                 [33mclass[39m=[32m"px-8 py-6 text-sm text-on-surface-variant"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0243896Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0244162Z                 [0mApr 20, 2026[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0244448Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0244751Z                   [33mclass[39m=[32m"mx-1"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0245044Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0245282Z                   [0m·[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0245545Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0245825Z                 [0m12:31 AM[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0246073Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0246315Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0246657Z                 [33mclass[39m=[32m"px-8 py-6 text-right"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0246983Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0247236Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0247638Z                   [33mclass[39m=[32m"flex items-center justify-end gap-2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0248163Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0248415Z                   [36m<a[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0249593Z                     [33mclass[39m=[32m"px-3 py-1.5 hover:bg-surface-container-highest rounded-lg transition-all text-primary flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight border border-primary/10 hover:border-primary/30"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0250636Z                     [33mdata-discover[39m=[32m"true"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0251026Z                     [33mhref[39m=[32m"/campaigns/3"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0251415Z                     [33mtitle[39m=[32m"View Details"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0251718Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0251990Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0252528Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0252919Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0253199Z                       [0mread_more[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0253780Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0254082Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0254376Z                       [0mView[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0254655Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0254938Z                   [36m</a>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0255200Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0255450Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0255696Z             [36m</tr>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0255932Z           [36m</tbody>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0256179Z         [36m</table>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0256410Z       [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0256631Z     [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0256851Z   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0257067Z [36m</body>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0257734Z [90m [2m❯[22m Object.getElementError ../../node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0259540Z [90m [2m❯[22m getElementError ../../node_modules/@testing-library/dom/dist/query-helpers.js:[2m20:35[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0261473Z [90m [2m❯[22m getMultipleElementsFoundError ../../node_modules/@testing-library/dom/dist/query-helpers.js:[2m23:10[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0263189Z [90m [2m❯[22m ../../node_modules/@testing-library/dom/dist/query-helpers.js:[2m55:13[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0264640Z [90m [2m❯[22m ../../node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0265237Z [36m [2m❯[22m src/tests/UI.test.tsx:[2m32:37[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0265560Z     [90m 30|[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0265886Z     [90m 31|[39m       [90m// Verify scheduled badge[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0266630Z     [90m 32|[39m       [35mconst[39m scheduledBadge [33m=[39m screen[33m.[39m[34mgetByText[39m([36m/Scheduled/i[39m)[33m;[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0267292Z     [90m   |[39m                                     [31m^[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0268040Z     [90m 33|[39m       [34mexpect[39m(scheduledBadge[33m.[39mclassName)[33m.[39m[34mtoContain[39m([32m'text-blue-400'[39m)[33m;[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0268581Z     [90m 34|[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0268699Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0268934Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0269134Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0269838Z [41m[1m FAIL [22m[49m src/tests/width_equality.test.tsx[2m > [22mAction Button Width Equality[2m > [22mverifies Table buttons share the same width class
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0270776Z [31m[1mTestingLibraryElementError[22m[39m: Found multiple elements with the text: Schedule
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0271137Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0271264Z Here are the matching elements:
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0271426Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0271567Z Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0271849Z [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0272369Z   [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0273044Z [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0273241Z   [0mSchedule[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0273707Z [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0273820Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0273978Z Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0274243Z [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0274455Z   [0mSchedule[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0274674Z [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0274784Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0275269Z (If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0275720Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0275856Z Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0276118Z [36m<body>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0276317Z   [36m<div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0276525Z     [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0277237Z       [33mclass[39m=[32m"glass-panel rounded-2xl border border-outline-variant/10 overflow-hidden shadow-2xl"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0277747Z     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0277959Z       [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0278248Z         [33mclass[39m=[32m"overflow-x-auto"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0278541Z       [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0278761Z         [36m<table[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0279183Z           [33mclass[39m=[32m"w-full text-left border-collapse min-w-[800px]"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0279568Z         [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0279784Z           [36m<thead>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0280031Z             [36m<tr[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0280548Z               [33mclass[39m=[32m"border-b border-outline-variant/10 bg-surface-container-low/50"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0280997Z             [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0281227Z               [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0281805Z                 [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0282302Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0282575Z                 [0mCampaign Name[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0282853Z               [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0283092Z               [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0283888Z                 [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0284387Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0284654Z                 [0mStatus[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0284904Z               [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0285142Z               [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0285715Z                 [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0286200Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0286453Z                 [0mSchedule[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0286717Z               [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0286962Z               [36m<th[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0287581Z                 [33mclass[39m=[32m"px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0288117Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0288367Z                 [0mActions[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0288614Z               [36m</th>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0288858Z             [36m</tr>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0289098Z           [36m</thead>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0289346Z           [36m<tbody[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0289732Z             [33mclass[39m=[32m"divide-y divide-outline-variant/5"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0290081Z           [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0290308Z             [36m<tr[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0290814Z               [33mclass[39m=[32m"hover:bg-surface-container-highest/30 transition-colors group"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0291371Z               [33mdata-testid[39m=[32m"campaign-row-1"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0291689Z             [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0291917Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0292225Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0292522Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0292909Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0293456Z                   [33mclass[39m=[32m"flex items-center gap-3"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0293923Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0294189Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0294857Z                     [33mclass[39m=[32m"w-8 h-8 flex-shrink-0 rounded-lg bg-surface-container-high flex items-center justify-center"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0295407Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0295682Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0296254Z                       [33mclass[39m=[32m"material-symbols-outlined text-lg text-on-surface-variant"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0296726Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0297012Z                       [0medit_note[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0297464Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0297749Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0298052Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0298421Z                     [33mclass[39m=[32m"flex flex-col min-w-0"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0298749Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0299025Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0299526Z                       [33mclass[39m=[32m"font-semibold text-on-surface tracking-tight truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0299974Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0300247Z                       [0mDraft 1[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0300537Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0300831Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0301284Z                       [33mclass[39m=[32m"text-xs text-on-surface-variant truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0301688Z                     [36m/>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0301965Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0302236Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0302475Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0302716Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0303023Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0303538Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0303810Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0304708Z                   [33mclass[39m=[32m"px-3 py-1 rounded-full text-[10px] font-black uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/30"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0305446Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0305709Z                   [0mDraft[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0305973Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0306236Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0306479Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0306890Z                 [33mclass[39m=[32m"px-8 py-6 text-sm text-on-surface-variant"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0307289Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0307547Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0307953Z                   [33mclass[39m=[32m"text-on-surface-variant/30 italic"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0308321Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0308594Z                   [0mNot Scheduled[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0308895Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0309157Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0309395Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0309736Z                 [33mclass[39m=[32m"px-8 py-6 text-right"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0310050Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0310306Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0310710Z                   [33mclass[39m=[32m"flex items-center justify-end gap-2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0311067Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0311332Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0312734Z                     [33mclass[39m=[32m"px-3 py-1.5 bg-surface-container-low border border-outline-variant/10 text-on-surface-variant hover:text-error hover:border-error/30 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0314190Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0314486Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0314917Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0315302Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0315579Z                       [0mdelete[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0315894Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0316182Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0316476Z                       [0mDelete[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0316762Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0317054Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0317487Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0318655Z                     [33mclass[39m=[32m"w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0319590Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0319864Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0320284Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0320671Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0320967Z                       [0mcalendar_month[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0321273Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0321565Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0321861Z                       [0mSchedule[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0322147Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0322437Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0322719Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0324178Z                     [33mclass[39m=[32m"w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0325229Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0325505Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0325919Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0326305Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0326569Z                       [0msend[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0326858Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0327145Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0327422Z                       [0mSend[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0327706Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0327998Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0328269Z                   [36m<a[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0329446Z                     [33mclass[39m=[32m"px-3 py-1.5 hover:bg-surface-container-highest rounded-lg transition-all text-primary flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight border border-primary/10 hover:border-primary/30"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0330484Z                     [33mdata-discover[39m=[32m"true"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0330868Z                     [33mhref[39m=[32m"/campaigns/1"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0331254Z                     [33mtitle[39m=[32m"View Details"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0331555Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0331821Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0332242Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0332630Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0332903Z                       [0mread_more[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0333205Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0333762Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0334064Z                       [0mView[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0334512Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0334792Z                   [36m</a>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0335064Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0335310Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0335554Z             [36m</tr>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0335788Z             [36m<tr[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0336301Z               [33mclass[39m=[32m"hover:bg-surface-container-highest/30 transition-colors group"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0336868Z               [33mdata-testid[39m=[32m"campaign-row-2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0337191Z             [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0337418Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0337729Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0338031Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0338434Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0338800Z                   [33mclass[39m=[32m"flex items-center gap-3"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0339133Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0339400Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0340069Z                     [33mclass[39m=[32m"w-8 h-8 flex-shrink-0 rounded-lg bg-surface-container-high flex items-center justify-center"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0340626Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0340902Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0341385Z                       [33mclass[39m=[32m"material-symbols-outlined text-lg text-primary"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0341811Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0342089Z                       [0mevent[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0342387Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0342671Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0342952Z                   [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0343517Z                     [33mclass[39m=[32m"flex flex-col min-w-0"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0343866Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0344137Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0344643Z                       [33mclass[39m=[32m"font-semibold text-on-surface tracking-tight truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0345094Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0345375Z                       [0mSched 1[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0345698Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0345983Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0346431Z                       [33mclass[39m=[32m"text-xs text-on-surface-variant truncate"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0346843Z                     [36m/>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0347149Z                   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0347419Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0347689Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0347936Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0348246Z                 [33mclass[39m=[32m"px-8 py-6"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0348541Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0348799Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0349524Z                   [33mclass[39m=[32m"px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-500/10 text-blue-400 border border-blue-500/20"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0350118Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0350382Z                   [0mscheduled[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0350659Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0350916Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0351149Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0351565Z                 [33mclass[39m=[32m"px-8 py-6 text-sm text-on-surface-variant"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0351947Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0352204Z                 [0mInvalid Date[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0352487Z                 [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0352798Z                   [33mclass[39m=[32m"mx-1"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0353081Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0353514Z                   [0m·[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0353951Z                 [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0354250Z                 [0mInvalid Date[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0354520Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0354761Z               [36m<td[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0355108Z                 [33mclass[39m=[32m"px-8 py-6 text-right"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0355433Z               [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0355685Z                 [36m<div[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0356092Z                   [33mclass[39m=[32m"flex items-center justify-end gap-2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0356451Z                 [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0356713Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0357884Z                     [33mclass[39m=[32m"w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0358929Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0359216Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0359640Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0360022Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0360321Z                       [0mcalendar_month[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0360634Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0360922Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0361222Z                       [0mReschedule[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0361521Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0361805Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0362094Z                   [36m<button[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0363528Z                     [33mclass[39m=[32m"w-[100px] justify-center px-3 py-1.5 bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0364629Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0364909Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0365362Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0365798Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0366092Z                       [0msend[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0366395Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0366726Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0367040Z                       [0mSend Now[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0367358Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0367675Z                   [36m</button>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0367977Z                   [36m<a[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0369244Z                     [33mclass[39m=[32m"px-3 py-1.5 hover:bg-surface-container-highest rounded-lg transition-all text-primary flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight border border-primary/10 hover:border-primary/30"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0370369Z                     [33mdata-discover[39m=[32m"true"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0370839Z                     [33mhref[39m=[32m"/campaigns/2"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0371364Z                     [33mtitle[39m=[32m"View Details"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0371724Z                   [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0372040Z                     [36m<span[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0372551Z                       [33mclass[39m=[32m"material-symbols-outlined text-sm"[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0373056Z                     [36m>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0373655Z                       [0mread_more[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0374121Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0374500Z                     [36m<span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0374894Z                       [0mView[0m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0375301Z                     [36m</span>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0375595Z                   [36m</a>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0375881Z                 [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0376309Z               [36m</td>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0376571Z             [36m</tr>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0376818Z           [36m</tbody>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0377061Z         [36m</table>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0377288Z       [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0377511Z     [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0377723Z   [36m</div>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0377943Z [36m</body>[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0378580Z [90m [2m❯[22m Object.getElementError ../../node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0379462Z [90m [2m❯[22m getElementError ../../node_modules/@testing-library/dom/dist/query-helpers.js:[2m20:35[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0380857Z [90m [2m❯[22m getMultipleElementsFoundError ../../node_modules/@testing-library/dom/dist/query-helpers.js:[2m23:10[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0382809Z [90m [2m❯[22m ../../node_modules/@testing-library/dom/dist/query-helpers.js:[2m55:13[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0384002Z [90m [2m❯[22m ../../node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0384697Z [36m [2m❯[22m src/tests/width_equality.test.tsx:[2m30:32[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0385104Z     [90m 28|[39m     )[33m;[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0385356Z     [90m 29|[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0386122Z     [90m 30|[39m     [35mconst[39m scheduleBtn [33m=[39m screen[33m.[39m[34mgetByText[39m([32m'Schedule'[39m)[33m.[39m[34mclosest[39m([32m'button'[39m)[33m;[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0386845Z     [90m   |[39m                                [31m^[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0387692Z     [90m 31|[39m     [35mconst[39m sendBtn [33m=[39m screen[33m.[39m[34mgetByText[39m([32m'Send'[39m)[33m.[39m[34mclosest[39m([32m'button'[39m)[33m;[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0388571Z     [90m 32|[39m     const rescheduleBtn = screen.getByText('Reschedule').closest('butt…
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0388911Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0389138Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0389358Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0389378Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0389798Z [2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (4)[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0390509Z [2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m19 passed[39m[22m[90m (21)[39m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0391005Z [2m   Start at [22m 00:31:38
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0391628Z [2m   Duration [22m 3.65s[2m (transform 615ms, setup 401ms, import 2.08s, tests 1.69s, environment 3.80s)[22m
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0392023Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0392030Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0462880Z ##[error]TestingLibraryElementError: Found multiple elements with the text: /Scheduled/i
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	Here are the matching elements:
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	<span
+Build & Test	Run Package Tests	  class="text-on-surface-variant/30 italic"
+Build & Test	Run Package Tests	>
+Build & Test	Run Package Tests	  Not Scheduled
+Build & Test	Run Package Tests	</span>
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	<span
+Build & Test	Run Package Tests	  class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-blue-500/10 text-blue-400 border border-blue-500/20"
+Build & Test	Run Package Tests	>
+Build & Test	Run Package Tests	  scheduled
+Build & Test	Run Package Tests	</span>
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	<body>
+Build & Test	Run Package Tests	  <div>
+Build & Test	Run Package Tests	    <div
+Build & Test	Run Package Tests	      class="glass-panel rounded-2xl border border-outline-variant/10 overflow-hidden shadow-2xl"
+Build & Test	Run Package Tests	    >
+Build & Test	Run Package Tests	      <div
+Build & Test	Run Package Tests	        class="overflow-x-auto"
+Build & Test	Run Package Tests	      >
+Build & Test	Run Package Tests	        <table
+Build & Test	Run Package Tests	          class="w-full text-left border-collapse min-w-[800px]"
+Build & Test	Run Package Tests	        >
+Build & Test	Run Package Tests	          <thead>
+Build & Test	Run Package Tests	            <tr
+Build & Test	Run Package Tests	              class="border-b border-outline-variant/10 bg-surface-container-low/50"
+Build & Test	Run Package Tests	            >
+Build & Test	Run Package Tests	              <th
+Build & Test	Run Package Tests	                class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                Campaign Name
+Build & Test	Run Package Tests	              </th>
+Build & Test	Run Package Tests	              <th
+Build & Test	Run Package Tests	                class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                Status
+Build & Test	Run Package Tests	              </th>
+Build & Test	Run Package Tests	              <th
+Build & Test	Run Package Tests	                class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                Schedule
+Build & Test	Run Package Tests	              </th>
+Build & Test	Run Package Tests	              <th
+Build & Test	Run Package Tests	                class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                Actions
+Build & Test	Run Package Tests	              </th>
+Build & Test	Run Package Tests	            </tr>
+Build & Test	Run Package Tests	          </thead>
+Build & Test	Run Package Tests	          <tbody
+Build & Test	Run Package Tests	            class="divide-y divide-outline-variant/5"
+Build & Test	Run Package Tests	          >
+Build & Test	Run Package Tests	            <tr
+Build & Test	Run Package Tests	              class="hover:bg-surface-container-highest/30 transition-colors group"
+Build & Test	Run Package Tests	              data-testid="campaign-row-1"
+Build & Test	Run Package Tests	            >
+Build & Test	Run Package Tests	              <td
+Build & Test	Run Package Tests	                class="px-8 py-6"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                <div
+Build & Test	Run Package Tests	                  class="flex items-center gap-3"
+Build & Test	Run Package Tests	                >
+Build & Test	Run Package Tests	                  <div
+Build & Test	Run Package Tests	                    class="w-8 h-8 flex-shrink-0 rounded-lg bg-surface-container-high flex items-center justify-center"
+Build & Test	Run Package Tests	                  >
+Build & Test	Run Package Tests	                    <span
+Build & Test	Run Package Tests	                      class="material-symbols-outlined text-lg text-on-surface-variant"
+Build & Test	Run Package Tests	                    >
+Build & Test	Run Package Tests	                      edit_note
+Build & Test	Run Package Tests	                    </span>
+Build & Test	Run Package Tests	                  </div>
+Build & Test	Run Package Tests	                  <div
+Build & Test	Run Package Tests	                    class="flex flex-col min-w-0"
+Build & Test	Run Package Tests	                  >
+Build & Test	Run Package Tests	                    <span
+Build & Test	Run Package Tests	                      class="font-semibold text-on-surface tracking-tight truncate"
+Build & Test	Run Package Tests	                    >
+Build & Test	Run Package Tests	                      C1
+Build & Test	Run Package Tests	                    </span>
+Build & Test	Run Package Tests	                    <span
+Build & Test	Run Package Tests	                      class="text-xs text-on-surface-variant truncate"
+Build & Test	Run Package Tests	                    >
+Build & Test	Run Package Tests	                      S1
+Build & Test	Run Package Tests	                    </span>
+Build & Test	Run Package Tests	                  </div>
+Build & Test	Run Package Tests	                </div>
+Build & Test	Run Package Tests	              </td>
+Build & Test	Run Package Tests	              <td
+Build & Test	Run Package Tests	                class="px-8 py-6"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                <span
+Build & Test	Run Package Tests	                  class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/30"
+Build & Test	Run Package Tests	                >
+Build & Test	Run Package Tests	                  Draft
+Build & Test	Run Package Tests	                </span>
+Build & Test	Run Package Tests	              </td>
+Build & Test	Run Package Tests	              <td
+Build & Test	Run Package Tests	                class="px-8 py-6 text-sm text-on-surface-variant"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                <span
+Build & Test	Run Package Tests	                  class="text-on-surface-variant/30 italic"
+Build & Test	Run Package Tests	                >
+Build & Test	Run Package Tests	                  Not Scheduled
+Build & Test	Run Package Tests	                </span>
+Build & Test	Run Package Tests	              </td>
+Build & Test	Run Package Tests	              <td
+Build & Test	Run Package Tests	                class="px-8 py-6 text-right"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                <div
+Build & Test	Run Package Tests	                  class="flex items-center justify-end gap-2"
+Build & Test	Run Package Tests	                >
+Build & Test	Run Package Tests	                  <button
+Build & Test	Run Package Tests	                    class="px-3 py-1.5 bg-surface-container-low border border-outline-variant/10 text-on-surface-variant hover:text-error hover:border-error/30 transition-all rounded-lg flex items-center g
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0484726Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0526073Z ##[error]TestingLibraryElementError: Found multiple elements with the text: Schedule
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	Here are the matching elements:
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	<th
+Build & Test	Run Package Tests	  class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"
+Build & Test	Run Package Tests	>
+Build & Test	Run Package Tests	  Schedule
+Build & Test	Run Package Tests	</th>
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	<span>
+Build & Test	Run Package Tests	  Schedule
+Build & Test	Run Package Tests	</span>
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+Build & Test	Run Package Tests	
+Build & Test	Run Package Tests	Ignored nodes: comments, script, style
+Build & Test	Run Package Tests	<body>
+Build & Test	Run Package Tests	  <div>
+Build & Test	Run Package Tests	    <div
+Build & Test	Run Package Tests	      class="glass-panel rounded-2xl border border-outline-variant/10 overflow-hidden shadow-2xl"
+Build & Test	Run Package Tests	    >
+Build & Test	Run Package Tests	      <div
+Build & Test	Run Package Tests	        class="overflow-x-auto"
+Build & Test	Run Package Tests	      >
+Build & Test	Run Package Tests	        <table
+Build & Test	Run Package Tests	          class="w-full text-left border-collapse min-w-[800px]"
+Build & Test	Run Package Tests	        >
+Build & Test	Run Package Tests	          <thead>
+Build & Test	Run Package Tests	            <tr
+Build & Test	Run Package Tests	              class="border-b border-outline-variant/10 bg-surface-container-low/50"
+Build & Test	Run Package Tests	            >
+Build & Test	Run Package Tests	              <th
+Build & Test	Run Package Tests	                class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                Campaign Name
+Build & Test	Run Package Tests	              </th>
+Build & Test	Run Package Tests	              <th
+Build & Test	Run Package Tests	                class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                Status
+Build & Test	Run Package Tests	              </th>
+Build & Test	Run Package Tests	              <th
+Build & Test	Run Package Tests	                class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                Schedule
+Build & Test	Run Package Tests	              </th>
+Build & Test	Run Package Tests	              <th
+Build & Test	Run Package Tests	                class="px-8 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                Actions
+Build & Test	Run Package Tests	              </th>
+Build & Test	Run Package Tests	            </tr>
+Build & Test	Run Package Tests	          </thead>
+Build & Test	Run Package Tests	          <tbody
+Build & Test	Run Package Tests	            class="divide-y divide-outline-variant/5"
+Build & Test	Run Package Tests	          >
+Build & Test	Run Package Tests	            <tr
+Build & Test	Run Package Tests	              class="hover:bg-surface-container-highest/30 transition-colors group"
+Build & Test	Run Package Tests	              data-testid="campaign-row-1"
+Build & Test	Run Package Tests	            >
+Build & Test	Run Package Tests	              <td
+Build & Test	Run Package Tests	                class="px-8 py-6"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                <div
+Build & Test	Run Package Tests	                  class="flex items-center gap-3"
+Build & Test	Run Package Tests	                >
+Build & Test	Run Package Tests	                  <div
+Build & Test	Run Package Tests	                    class="w-8 h-8 flex-shrink-0 rounded-lg bg-surface-container-high flex items-center justify-center"
+Build & Test	Run Package Tests	                  >
+Build & Test	Run Package Tests	                    <span
+Build & Test	Run Package Tests	                      class="material-symbols-outlined text-lg text-on-surface-variant"
+Build & Test	Run Package Tests	                    >
+Build & Test	Run Package Tests	                      edit_note
+Build & Test	Run Package Tests	                    </span>
+Build & Test	Run Package Tests	                  </div>
+Build & Test	Run Package Tests	                  <div
+Build & Test	Run Package Tests	                    class="flex flex-col min-w-0"
+Build & Test	Run Package Tests	                  >
+Build & Test	Run Package Tests	                    <span
+Build & Test	Run Package Tests	                      class="font-semibold text-on-surface tracking-tight truncate"
+Build & Test	Run Package Tests	                    >
+Build & Test	Run Package Tests	                      Draft 1
+Build & Test	Run Package Tests	                    </span>
+Build & Test	Run Package Tests	                    <span
+Build & Test	Run Package Tests	                      class="text-xs text-on-surface-variant truncate"
+Build & Test	Run Package Tests	                    />
+Build & Test	Run Package Tests	                  </div>
+Build & Test	Run Package Tests	                </div>
+Build & Test	Run Package Tests	              </td>
+Build & Test	Run Package Tests	              <td
+Build & Test	Run Package Tests	                class="px-8 py-6"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                <span
+Build & Test	Run Package Tests	                  class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-surface-container-highest text-on-surface-variant border border-outline-variant/30"
+Build & Test	Run Package Tests	                >
+Build & Test	Run Package Tests	                  Draft
+Build & Test	Run Package Tests	                </span>
+Build & Test	Run Package Tests	              </td>
+Build & Test	Run Package Tests	              <td
+Build & Test	Run Package Tests	                class="px-8 py-6 text-sm text-on-surface-variant"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                <span
+Build & Test	Run Package Tests	                  class="text-on-surface-variant/30 italic"
+Build & Test	Run Package Tests	                >
+Build & Test	Run Package Tests	                  Not Scheduled
+Build & Test	Run Package Tests	                </span>
+Build & Test	Run Package Tests	              </td>
+Build & Test	Run Package Tests	              <td
+Build & Test	Run Package Tests	                class="px-8 py-6 text-right"
+Build & Test	Run Package Tests	              >
+Build & Test	Run Package Tests	                <div
+Build & Test	Run Package Tests	                  class="flex items-center justify-end gap-2"
+Build & Test	Run Package Tests	                >
+Build & Test	Run Package Tests	                  <button
+Build & Test	Run Package Tests	                    class="px-3 py-1.5 bg-surface-container-low border border-outline-variant/10 text-on-surface-variant hover:text-error hover:border-error/30 transition-all rounded-lg flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tight disabled:opacity-50"
+Build & Test	Run Package Tests	                  >
+Build & Test	Run Package Tests	                    <span
+Build & Test	Run Package Tests	                  
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0616164Z error Command failed with exit code 1.
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0616948Z info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0761385Z error Command failed.
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0761802Z Exit code: 1
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0762382Z Command: /opt/hostedtoolcache/node/20.20.2/x64/bin/node
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0763660Z Arguments: /usr/local/lib/node_modules/yarn/lib/cli.js run test
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0765003Z Directory: /home/runner/work/mini-campaign-manager/mini-campaign-manager/packages/frontend
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0765964Z Output:
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0766148Z 
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0767083Z info Visit https://yarnpkg.com/en/docs/cli/workspaces for documentation about this command.
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0932779Z error Command failed with exit code 1.
+Build & Test	Run Package Tests	2026-04-20T00:31:42.0933850Z info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Build & Test	Run Package Tests	2026-04-20T00:31:42.1027700Z ##[error]Process completed with exit code 1.
+Build & Test	Upload Playwright Report	﻿2026-04-20T00:31:42.1134355Z ##[group]Run actions/upload-artifact@v4
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1134631Z with:
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1134810Z   name: playwright-report
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1135032Z   path: playwright-report/
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1135242Z   retention-days: 30
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1135434Z   if-no-files-found: warn
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1135809Z   compression-level: 6
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1135992Z   overwrite: false
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1136182Z   include-hidden-files: false
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1136390Z env:
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1136789Z   DATABASE_URL: ***localhost:5432/campaign_manager
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1137066Z   JWT_SECRET: ci-secret
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1137263Z   NODE_ENV: test
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1137431Z   PORT: 3001
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.1137595Z ##[endgroup]
+Build & Test	Upload Playwright Report	2026-04-20T00:31:42.3206514Z ##[warning]No files were found with the provided path: playwright-report/. No artifacts will be uploaded.
+Build & Test	Post Checkout Repository	﻿2026-04-20T00:31:42.3350403Z Post job cleanup.
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4290005Z [command]/usr/bin/git version
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4325922Z git version 2.53.0
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4370026Z Temporarily overriding HOME='/home/runner/work/_temp/965b9820-47d2-400c-861f-6f9afac7b1c3' before making global git config changes
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4370877Z Adding repository directory to the temporary git global config as a safe directory
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4382414Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/mini-campaign-manager/mini-campaign-manager
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4420674Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4458588Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4697396Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4721075Z http.https://github.com/.extraheader
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4734591Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4768001Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.4998413Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Build & Test	Post Checkout Repository	2026-04-20T00:31:42.5029779Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Build & Test	Stop containers	﻿2026-04-20T00:31:42.5345317Z Print service container logs: 293c8915b677478791661dec9de78ea8_postgres15alpine_f91310
+Build & Test	Stop containers	2026-04-20T00:31:42.5350323Z ##[command]/usr/bin/docker logs --details efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Stop containers	2026-04-20T00:31:42.5465899Z  The files belonging to this database system will be owned by user "postgres".
+Build & Test	Stop containers	2026-04-20T00:31:42.5467211Z  This user must also own the server process.
+Build & Test	Stop containers	2026-04-20T00:31:42.5467850Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5468307Z  The database cluster will be initialized with locale "en_US.utf8".
+Build & Test	Stop containers	2026-04-20T00:31:42.5469674Z  sh: locale: not found
+Build & Test	Stop containers	2026-04-20T00:31:42.5470208Z  2026-04-20 00:30:45.138 UTC [37] WARNING:  no usable system locales were found
+Build & Test	Stop containers	2026-04-20T00:31:42.5470983Z  initdb: warning: enabling "trust" authentication for local connections
+Build & Test	Stop containers	2026-04-20T00:31:42.5471573Z  The default database encoding has accordingly been set to "UTF8".
+Build & Test	Stop containers	2026-04-20T00:31:42.5471993Z  The default text search configuration will be set to "english".
+Build & Test	Stop containers	2026-04-20T00:31:42.5472298Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5472506Z  Data page checksums are disabled.
+Build & Test	Stop containers	2026-04-20T00:31:42.5472740Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5473015Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+Build & Test	Stop containers	2026-04-20T00:31:42.5473612Z  creating subdirectories ... ok
+Build & Test	Stop containers	2026-04-20T00:31:42.5473920Z  selecting dynamic shared memory implementation ... posix
+Build & Test	Stop containers	2026-04-20T00:31:42.5474246Z  selecting default max_connections ... 100
+Build & Test	Stop containers	2026-04-20T00:31:42.5474513Z  selecting default shared_buffers ... 128MB
+Build & Test	Stop containers	2026-04-20T00:31:42.5474773Z  selecting default time zone ... UTC
+Build & Test	Stop containers	2026-04-20T00:31:42.5475015Z  creating configuration files ... ok
+Build & Test	Stop containers	2026-04-20T00:31:42.5475263Z  running bootstrap script ... ok
+Build & Test	Stop containers	2026-04-20T00:31:42.5475546Z  performing post-bootstrap initialization ... ok
+Build & Test	Stop containers	2026-04-20T00:31:42.5476070Z  syncing data to disk ... ok
+Build & Test	Stop containers	2026-04-20T00:31:42.5476285Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5476459Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5476673Z  Success. You can now start the database server using:
+Build & Test	Stop containers	2026-04-20T00:31:42.5476949Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5477164Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+Build & Test	Stop containers	2026-04-20T00:31:42.5477451Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5477974Z  waiting for server to start....2026-04-20 00:30:45.659 UTC [43] LOG:  starting PostgreSQL 15.17 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+Build & Test	Stop containers	2026-04-20T00:31:42.5478751Z  2026-04-20 00:30:45.660 UTC [43] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+Build & Test	Stop containers	2026-04-20T00:31:42.5479301Z  2026-04-20 00:30:45.662 UTC [46] LOG:  database system was shut down at 2026-04-20 00:30:45 UTC
+Build & Test	Stop containers	2026-04-20T00:31:42.5479840Z  2026-04-20 00:30:45.666 UTC [43] LOG:  database system is ready to accept connections
+Build & Test	Stop containers	2026-04-20T00:31:42.5480443Z   done
+Build & Test	Stop containers	2026-04-20T00:31:42.5480863Z  server started
+Build & Test	Stop containers	2026-04-20T00:31:42.5481142Z  CREATE DATABASE
+Build & Test	Stop containers	2026-04-20T00:31:42.5481422Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5481656Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5482111Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+Build & Test	Stop containers	2026-04-20T00:31:42.5482537Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5483039Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+Build & Test	Stop containers	2026-04-20T00:31:42.5484154Z  2026-04-20 00:30:45.921 UTC [1] LOG:  starting PostgreSQL 15.17 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+Build & Test	Stop containers	2026-04-20T00:31:42.5484787Z  2026-04-20 00:30:45.921 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+Build & Test	Stop containers	2026-04-20T00:31:42.5485240Z  2026-04-20 00:30:45.921 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+Build & Test	Stop containers	2026-04-20T00:31:42.5485720Z  2026-04-20 00:30:45.922 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+Build & Test	Stop containers	2026-04-20T00:31:42.5486252Z  2026-04-20 00:30:45.924 UTC [59] LOG:  database system was shut down at 2026-04-20 00:30:45 UTC
+Build & Test	Stop containers	2026-04-20T00:31:42.5486744Z  2026-04-20 00:30:45.929 UTC [1] LOG:  database system is ready to accept connections
+Build & Test	Stop containers	2026-04-20T00:31:42.5487163Z  2026-04-20 00:30:54.750 UTC [69] FATAL:  role "root" does not exist
+Build & Test	Stop containers	2026-04-20T00:31:42.5487532Z  2026-04-20 00:31:04.808 UTC [76] FATAL:  role "root" does not exist
+Build & Test	Stop containers	2026-04-20T00:31:42.5488113Z  2026-04-20 00:31:14.859 UTC [83] FATAL:  role "root" does not exist
+Build & Test	Stop containers	2026-04-20T00:31:42.5488473Z  2026-04-20 00:31:24.912 UTC [91] FATAL:  role "root" does not exist
+Build & Test	Stop containers	2026-04-20T00:31:42.5488832Z  2026-04-20 00:31:34.958 UTC [102] FATAL:  role "root" does not exist
+Build & Test	Stop containers	2026-04-20T00:31:42.5489302Z  waiting for server to shut down...2026-04-20 00:30:45.802 UTC [43] LOG:  received fast shutdown request
+Build & Test	Stop containers	2026-04-20T00:31:42.5489801Z  .2026-04-20 00:30:45.802 UTC [43] LOG:  aborting any active transactions
+Build & Test	Stop containers	2026-04-20T00:31:42.5490342Z  2026-04-20 00:30:45.805 UTC [43] LOG:  background worker "logical replication launcher" (PID 49) exited with exit code 1
+Build & Test	Stop containers	2026-04-20T00:31:42.5490848Z  2026-04-20 00:30:45.805 UTC [44] LOG:  shutting down
+Build & Test	Stop containers	2026-04-20T00:31:42.5491209Z  2026-04-20 00:30:45.806 UTC [44] LOG:  checkpoint starting: shutdown immediate
+Build & Test	Stop containers	2026-04-20T00:31:42.5492159Z  2026-04-20 00:30:45.821 UTC [44] LOG:  checkpoint complete: wrote 921 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.012 s, sync=0.003 s, total=0.016 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4239 kB, estimate=4239 kB
+Build & Test	Stop containers	2026-04-20T00:31:42.5493078Z  2026-04-20 00:30:45.828 UTC [43] LOG:  database system is shut down
+Build & Test	Stop containers	2026-04-20T00:31:42.5493853Z   done
+Build & Test	Stop containers	2026-04-20T00:31:42.5494128Z  server stopped
+Build & Test	Stop containers	2026-04-20T00:31:42.5494408Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5494642Z  PostgreSQL init process complete; ready for start up.
+Build & Test	Stop containers	2026-04-20T00:31:42.5495105Z  
+Build & Test	Stop containers	2026-04-20T00:31:42.5500939Z Stop and remove container: 293c8915b677478791661dec9de78ea8_postgres15alpine_f91310
+Build & Test	Stop containers	2026-04-20T00:31:42.5506113Z ##[command]/usr/bin/docker rm --force efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Stop containers	2026-04-20T00:31:42.7008061Z efeff84e3f37733d31d3b133f59a32459f8f7e9aec19323536a397ae63ff2b1b
+Build & Test	Stop containers	2026-04-20T00:31:42.7032238Z Remove container network: github_network_9ddb49308e844dfea9d6c8835d4b66e5
+Build & Test	Stop containers	2026-04-20T00:31:42.7036831Z ##[command]/usr/bin/docker network rm github_network_9ddb49308e844dfea9d6c8835d4b66e5
+Build & Test	Stop containers	2026-04-20T00:31:42.7956947Z github_network_9ddb49308e844dfea9d6c8835d4b66e5
+Build & Test	Complete job	﻿2026-04-20T00:31:42.8017262Z Cleaning up orphan processes
+Build & Test	Complete job	2026-04-20T00:31:42.8319611Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
